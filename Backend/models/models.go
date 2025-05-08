@@ -1,15 +1,12 @@
 package models
 
+import "gorm.io/gorm"
+
 type Usuario struct {
-	Id       string `json:"id" gorm:"primaryKey"`
-	Nombre   string
-	Apellido string
-}
-
-type Socio struct {
-}
-
-type Administrador struct {
+	gorm.Model        //agrega 4 campos comunes de toda entidad Id,CreatedAt, UpdatedAt, DeletedAt
+	Email      string `gorm:"unique"`
+	Password   string
+	Rol        string // "admin" o "socio" si el admin y socio como admin,socio
 }
 
 type Actividad struct {

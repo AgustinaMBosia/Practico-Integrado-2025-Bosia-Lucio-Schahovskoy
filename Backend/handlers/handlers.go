@@ -1,4 +1,4 @@
-package main
+package handlers
 
 // funciones para listar actividades, ver detalle, crear, editar, eliminar.
 
