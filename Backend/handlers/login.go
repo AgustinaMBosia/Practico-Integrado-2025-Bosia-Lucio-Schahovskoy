@@ -1,12 +1,18 @@
 package handlers
 
 import (
+	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/config"
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/models"
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/utils"
 
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
+
+var Db *gorm.DB
 
 type ErrorResponse struct {
 	Message string `json:"message"`
@@ -27,9 +33,10 @@ func Register(c *gin.Context) {
 	}
 	user.PasswordHash = string(hashedPassword)
 
-	// Save the user to the data source
-	// This is a placeholder; replace with actual database logic
-	// TODO: Replace with actual database logic to save the user
+	if err := config.Db.Create(&user).Error; err != nil {
+		c.JSON(500, ErrorResponse{Message: "Error saving user to database"})
+		return
+	}
 
 	c.JSON(201, gin.H{
 		"message": "User registered successfully",
@@ -44,25 +51,30 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	// Assuming you have a slice of users available
-	users := []models.User{} // This should be replaced with actual data source
+	log.Println("Attempting to log in user:", user.Username)
 
-	storedUser, ok := models.FindUserByUsername(users, user.Username)
-	if !ok {
+	var storedUser models.User
+	if err := config.Db.Where("username = ?", user.Username).First(&storedUser).Error; err != nil {
+		log.Println("User not found:", user.Username)
 		c.JSON(401, ErrorResponse{Message: "Invalid username or password"})
 		return
 	}
 
 	err := bcrypt.CompareHashAndPassword([]byte(storedUser.PasswordHash), []byte(user.PasswordHash))
 	if err != nil {
+		log.Println("Password mismatch for user:", user.Username)
 		c.JSON(401, ErrorResponse{Message: "Invalid username or password"})
 		return
 	}
+
 	token, err := utils.GenerateToken(storedUser.Id, storedUser.Username, storedUser.Email, storedUser.Rol)
 	if err != nil {
+		log.Println("Error generating token for user:", user.Username, "Error:", err)
 		c.JSON(500, ErrorResponse{Message: "Error generating token"})
 		return
 	}
+
+	log.Println("User logged in successfully:", user.Username)
 	c.JSON(200, gin.H{
 		"token":  token,
 		"Id":     storedUser.Id,

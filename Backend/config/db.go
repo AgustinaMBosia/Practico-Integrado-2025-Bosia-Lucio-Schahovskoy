@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	dba *gorm.DB
+	Db  *gorm.DB
 	err error
 )
 
@@ -36,7 +36,7 @@ func InitDb() {
 	dbName := os.Getenv("DB_NAME")
 	dns := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, dbName)
 
-	dba, err = gorm.Open(mysql.Open(dns), &gorm.Config{
+	Db, err = gorm.Open(mysql.Open(dns), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 	if err != nil {
@@ -44,19 +44,19 @@ func InitDb() {
 	}
 	log.Println("Database connection established successfully")
 
-	usuarioClient.Db = dba
-	inscripcionClient.Db = dba
-	actividadClient.Db = dba
-	categoriaClient.Db = dba
-	instructorClient.Db = dba
+	usuarioClient.Db = Db
+	inscripcionClient.Db = Db
+	actividadClient.Db = Db
+	categoriaClient.Db = Db
+	instructorClient.Db = Db
 }
 
 func StartDbEngine() {
-	dba.AutoMigrate(&models.User{})
-	dba.AutoMigrate(&models.Inscription{})
-	dba.AutoMigrate(&models.Activity{})
-	dba.AutoMigrate(&models.Category{})
-	dba.AutoMigrate(&models.Instructor{})
+	Db.AutoMigrate(&models.User{})
+	Db.AutoMigrate(&models.Inscription{})
+	Db.AutoMigrate(&models.Activity{})
+	Db.AutoMigrate(&models.Category{})
+	Db.AutoMigrate(&models.Instructor{})
 	log.Println("Finishing Migration Database Tables")
 
 }
