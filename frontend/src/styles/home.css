@@ -1,0 +1,12 @@
+.home-page {
+    max-width: 3000px;
+    margin: 0 auto;
+    padding: 0px;
+    position: relative;
+    min-height: 100vh;
+    background-image: url('/src/style/images/homebackgrond.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgb(115, 115, 189);
+}

@@ -1,77 +1,10 @@
-/* Estilo general de la app */
-body {
-    margin: 0;
-    background-color: #e0f2ff;
-    font-family: 'Poppins', 'Segoe UI', sans-serif;
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.app-container {
-    padding: 40px 20px;
-    background-color: #e0f2ff;
-    min-height: 100vh;
-}
-
-/* Encabezado principal */
-h1 {
-    text-align: center;
-    font-size: 3em;
-    margin-bottom: 40px;
-    color: #012970;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Buscador */
-input {
-    display: block;
-    margin: 0 auto 40px auto;
-    padding: 14px 18px;
-    width: 90%;
-    max-width: 400px;
-    border: 2px solid #0077b6;
-    border-radius: 12px;
-    font-size: 1.1em;
-    color: #012970;
-    background-color: #ffffff;
-    transition: border 0.2s ease;
-}
-
-input:focus {
-    outline: none;
-    border-color: #023e8a;
-}
-
-/* Tarjetas de actividad */
-.actividad {
-    background: linear-gradient(145deg, #ffffff, #d4e9ff);
-    border-left: 8px solid #0077b6;
-    border-radius: 12px;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
-    padding: 20px 24px;
-    margin: 20px auto;
-    max-width: 600px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.actividad:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
-}
-
-.actividad h2 {
-    font-size: 1.7em;
-    margin-bottom: 12px;
-    color: #012970;
-}
-
-.actividad p {
-    margin: 6px 0;
-    color: #013a63;
-    font-size: 1.05em;
-}
-
-/* Texto sin resultados */
-p {
-    text-align: center;
-    color: #495057;
-    font-style: italic;
+main {
+  flex: 1;
+  padding: 0px;
 }
