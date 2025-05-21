@@ -6,6 +6,7 @@ type ActivityDto struct {
 	Horario              string `json:"horario"`
 	Dia                  string `json:"dia"`
 	Cupo                 int    `json:"cupo"`
+	Descripcion          string `json:"descripcion"`
 	CategoriaID          int    `json:"categoria_id"`
 	DescripcionCategoria string `json:"Categoria_description"`
 	InstructorID         int    `json:"instructor_id"`

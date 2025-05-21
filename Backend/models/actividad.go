@@ -6,6 +6,7 @@ type Activity struct {
 	Horario      string   `gorm:"varchar(250);not null"`
 	Dia          string   `gorm:"varchar(250);not null"`
 	Cupo         int      `gorm:"int;not null"`
+	Descripcion  string   `gorm:"varchar(250);not null"`
 	Categoria    Category `gorm:"foreignkey:CategoriaID"`
 	CategoriaID  int
 	Instructor   Instructor `gorm:"foreignkey:InstructorID"`
