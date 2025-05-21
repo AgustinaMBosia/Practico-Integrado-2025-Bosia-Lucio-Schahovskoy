@@ -46,3 +46,9 @@ body{
     transform: scale(1.1);
     cursor: pointer;
 }
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}

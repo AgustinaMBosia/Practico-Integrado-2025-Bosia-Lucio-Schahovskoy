@@ -1,4 +1,3 @@
-// src/pages/ActivityPage.jsx
 import React from 'react';
 import ActivityDetail from '../components/ActivityDetail';
 import '../styles/activityPack.css';

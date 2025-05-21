@@ -1,5 +1,4 @@
 import React from 'react';
-import ActivityCard from '../components/ActivityCard';
 import '../styles/home.css';
 import IconPack from '../components/IconPack';
 import SearchPack from '../components/SearchPack';
