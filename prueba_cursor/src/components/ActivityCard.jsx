@@ -1,8 +1,11 @@
 import '../styles/activityCard.css';
+import { useNavigate } from 'react-router-dom';
 
 const ActivityCard = ({ activity }) => {
+  const navigate = useNavigate();
+
   const handleClick = () => {
-    window.location.href = `/actividad/${activity.id}`;
+    navigate(`/Activities/${activity.id}`);
   };
 
   return (

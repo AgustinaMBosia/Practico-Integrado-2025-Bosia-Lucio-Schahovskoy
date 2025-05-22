@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/home'
 import MyActivities from './pages/MyActivities';
 import Activities from './pages/activities';
+import ActivityDetail from './pages/ActivityDetail';
 
 function App() {
 
@@ -13,7 +14,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/MyActivities" element={<MyActivities />} />
         <Route path="/Activities" element={<Activities />} />
-        {/*<Route path="/MyActivities/ActivityDetails" element={<ActivityDetails />} />
+        <Route path="/Activities/:id" element={<ActivityDetail />} />
+
+        {/*
         <Route path="/login" element={<Login />} />
         */}
       </Routes>
