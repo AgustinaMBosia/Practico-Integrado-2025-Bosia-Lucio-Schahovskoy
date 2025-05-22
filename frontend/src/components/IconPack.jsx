@@ -13,6 +13,7 @@ const IconPack = () => {
         setShowActivities(!showActivities);
     };
 
+    /*
     useEffect(() => {
         if (showActivities && activities.length === 0) {
             fetch('http://localhost:8080/actividades')
@@ -21,7 +22,7 @@ const IconPack = () => {
                 .catch(error => console.error("Error al cargar actividades:", error));
         }
     }, [showActivities]);
-
+*/
     return (
         <div>
             <div className="icon-pack" >
