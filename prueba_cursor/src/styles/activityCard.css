@@ -1,0 +1,20 @@
+.activity-card {
+    background-color: #100457;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem;
+    width: calc(100% - 2rem);
+    max-width: 30vw;
+    text-align: center;
+    transition: transform 0.5s ease, background-color 0.3s ease;
+    color:#b5adad;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.activity-card:hover {
+    background-color: #0d072d;
+    cursor: pointer;
+}
+
+
