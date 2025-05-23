@@ -10,14 +10,14 @@ import Login from './pages/login';
 function App() {
 
   return (
-    
+
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/Home" element={<Home />} />
         <Route path="/MyActivities" element={<MyActivities />} />
         <Route path="/Activities" element={<Activities />} />
         <Route path="/Activities/:id" element={<ActivityDetail />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </Router>
 

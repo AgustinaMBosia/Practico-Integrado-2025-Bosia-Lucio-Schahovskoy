@@ -18,10 +18,10 @@ const Icons = ({
   const [showMenuDropdown, setShowMenuDropdown] = useState(false);
   const navigate = useNavigate();
 
-  const handleHomeClick = () => navigate('/');
+  const handleHomeClick = () => navigate('/Home');
   const handleUserClick = () => setShowUserMenu(!showUserMenu);
   const handleMisActividades = () => navigate('/MyActivities');
-  const handleLogout = () => navigate('/Login');
+  const handleLogout = () => navigate('/');
   const handleMenuClick = () => navigate('/Activities');
   return (
     <div className="icon-container">

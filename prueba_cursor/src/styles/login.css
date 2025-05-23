@@ -12,7 +12,9 @@ body {
     justify-content: center;
     background-color: #2400ff;
     border-radius: 2vw;
-
+    width: auto;
+    height: auto;
+    padding: 0.5vw;
 }
 
 .form-group {
@@ -21,10 +23,19 @@ body {
     align-items: center;
     justify-content: center;
     background-color: transparent;
-    width: 30vw;
-    height: 5vw;
-    padding: 2vw;
+    width: auto;
+    height: auto;
+    margin: 2.5vw;
     border-radius: 1vw;
+}
+
+h1{
+    color: #fff;
+    font-size: 1.5vw;
+    font-weight: 600;
+    font-family: 'Pragmatica', sans-serif;
+    position: absolute;
+    top: 10%;
 }
 
 .form-group input {
@@ -32,17 +43,24 @@ body {
     border-color: #857f7f 1px;
     border-radius: 1vw;
     color: #857f7f;
-    font-size: 0.5vw;
-    padding: 1vw;
-    width: 70%;
+    font-size: 1vw;
+    padding: 0.5vw;
+    width: 50%;
+    height: 1.5vw;
+    margin: 1vw;
     font-family: 'Pragmatica', sans-serif;
+}
+
+.form-group input::placeholder {
+    color: #857f7f;
+    font-size: 1vw;
 }
 
 .form-group label {
     color: #fff;
     font-size: 1.5vw;
     font-weight: 600;
-    margin-bottom: 1vw;
+    margin: 1vw;
     font-family: 'Pragmatica', sans-serif;
 }
 
@@ -53,7 +71,7 @@ body {
     padding: 1vw;
     border-radius: 1vw;
     border: none;
-    width: 30%;
+    width: auto;
     font-size: medium;
     font-weight: 600;
     font-family: 'Pragmatica', sans-serif;
@@ -61,7 +79,6 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.form-group input::placeholder {
-    color: #857f7f;
-    font-size: 0.5vw;
+.submit:hover {
+    background-color: #08051c;
 }
