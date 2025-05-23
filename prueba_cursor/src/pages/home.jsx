@@ -1,9 +1,10 @@
 import React from 'react';
-import '../styles/home.css';
+import '../styles/Home.css';
 
 import GymHeader from '../components/GymHeader';
 import SearchBar from '../components/SearchBar';
 import Icons from '../components/Icons';
+import TestActivityCard from '../components/testcard';
 
 const Home = () => {
     return (

@@ -1,10 +1,12 @@
 import React from 'react';
+import axios from 'axios';
 
 import '../styles/Activities.css';
 
 import Icons from '../components/Icons';
 
 const MyActivities = () => {
+    
     return (
         <div className='background-container'>
         <div>

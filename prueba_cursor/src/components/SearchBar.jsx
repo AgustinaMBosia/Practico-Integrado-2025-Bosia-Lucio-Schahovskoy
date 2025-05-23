@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchIcon from '../styles/images/searchbaricon.svg';
-import '../styles/searchpack.css';
+import '../styles/SearchPack.css';
 
 const SearchPack = () => {
     return (

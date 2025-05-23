@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/gymheader.css';
+import '../styles/GymHeader.css';
 
 const GymHeader = () => {
     return (

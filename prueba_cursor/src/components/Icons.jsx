@@ -7,7 +7,7 @@ import MenuIcon from '../styles/images/menuicon.svg';
 
 import Activities from '../pages/activities';
 
-import '../styles/icon.css';
+import '../styles/Icon.css';
 
 const Icons = ({
   showHome = true,
@@ -21,7 +21,7 @@ const Icons = ({
   const handleHomeClick = () => navigate('/');
   const handleUserClick = () => setShowUserMenu(!showUserMenu);
   const handleMisActividades = () => navigate('/MyActivities');
-  const handleLogout = () => navigate('/login');
+  const handleLogout = () => navigate('/Login');
   const handleMenuClick = () => navigate('/Activities');
   return (
     <div className="icon-container">
@@ -29,7 +29,7 @@ const Icons = ({
       {/* Contenedor fijo para Home */}
       <div
         className="icon-wrapper"
-        style={{ visibility: showHome ? 'visible' : 'hidden' }} // controla visibilidad pero ocupa espacio
+        style={{ visibility: showHome ? 'visible' : 'hidden' }}
       >
         <img
           src={HomeIcon}
@@ -58,10 +58,10 @@ const Icons = ({
         )}
       </div>
 
-      {/* Contenedor fijo para Home */}
+      {/* Contenedor fijo para Menu */}
       <div
         className="icon-wrapper"
-        style={{ visibility: showMenu ? 'visible' : 'hidden' }} // controla visibilidad pero ocupa espacio
+        style={{ visibility: showMenu ? 'visible' : 'hidden' }}
       >
         <img
           src={MenuIcon}

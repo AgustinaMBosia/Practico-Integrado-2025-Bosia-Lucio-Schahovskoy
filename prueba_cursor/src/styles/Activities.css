@@ -2,6 +2,7 @@
     background-color: #100457;
     height: 100vh;
     width: 100vw;
+    overflow: hidden;
 }
 
 .my-activities-container{
@@ -12,7 +13,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    overflow-y: auto;
+    padding-top: 100px;
 }
 
 h1{
@@ -20,6 +22,16 @@ h1{
     font-weight: 600;
     margin-bottom: 2rem;
     font-family: 'Pragmatica', sans-serif;
-    position: absolute;
-    top: 0%;
+    color: #b5adad;
+    text-align: center;
+    position: fixed;
+    top: 20px;
+    z-index: 1;
+}
+
+.loading-message, .error-message {
+    color: #b5adad;
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 1.2rem;
 }
