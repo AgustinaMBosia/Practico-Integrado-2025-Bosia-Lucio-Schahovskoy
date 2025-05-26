@@ -5,7 +5,7 @@ import HomeIcon from '../styles/images/homeicon.svg';
 import UserIcon from '../styles/images/usericon.svg';
 import MenuIcon from '../styles/images/menuicon.svg';
 
-import Activities from '../pages/activities';
+import Activities from '../pages/Activities';
 
 import '../styles/Icon.css';
 

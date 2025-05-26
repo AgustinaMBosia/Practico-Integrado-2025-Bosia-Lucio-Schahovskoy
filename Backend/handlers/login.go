@@ -1,5 +1,7 @@
 package handlers
 
+//esto tendria que estar en base a los dto de user no el model
+
 import (
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/config"
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/models"

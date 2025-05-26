@@ -16,7 +16,7 @@ const Activities = () => {
 
         const fetchActivities = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/actividades', {
+                const response = await axios.get('http://localhost:8080/actividad', {
                     cancelToken: cancelToken.token
                 });
                 setActivities(response.data);

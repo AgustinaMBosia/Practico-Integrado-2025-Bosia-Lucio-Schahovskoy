@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import Home from './pages/home'
+import Home from './pages/Home'
 import MyActivities from './pages/MyActivities';
-import Activities from './pages/activities';
+import Activities from './pages/Activities';
 import ActivityDetail from './pages/ActivityDetail';
-import Login from './pages/login';
+import Login from './pages/Login';
 
 function App() {
 
