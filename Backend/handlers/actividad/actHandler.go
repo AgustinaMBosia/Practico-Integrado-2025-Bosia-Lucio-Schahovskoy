@@ -22,3 +22,17 @@ func GetActividadById(c *gin.Context) {
 
 	c.JSON(http.StatusOK, actividadDto)
 }
+
+func GetAllActividades(c *gin.Context) {
+	log.Debug("Get all actividades")
+
+	actividades, err := services.ActividadService.GetAllActividades()
+
+	if err != nil {
+		log.Error("Error getting actividades: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error getting actividades"})
+		return
+	}
+
+	c.JSON(http.StatusOK, actividades)
+}

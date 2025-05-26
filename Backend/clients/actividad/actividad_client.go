@@ -23,3 +23,16 @@ func PostActividad(actividad models.Activity) models.Activity {
 	}
 	return actividad
 }
+
+func GetAllActividades() []models.Activity {
+	var actividades []models.Activity
+
+	result := Db.Find(&actividades) // agregar un preload de instructores y categorías una vez implementados
+	Db.Preload("Category").Preload("Instructor").Find(&actividades)
+
+	if result.Error != nil {
+		log.Fatal("Error getting all actividades: ", result.Error)
+	}
+
+	return actividades
+}

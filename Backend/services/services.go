@@ -22,6 +22,7 @@ type actividadService struct{}
 
 type actividadServiceInterface interface {
 	GetActividadById(id int) (dto.ActivityDto, error)
+	GetAllActividades() ([]dto.ActivityDto, error)
 }
 
 var (
@@ -48,4 +49,23 @@ func (s *actividadService) GetActividadById(id int) (dto.ActivityDto, error) {
 	actividadDto.CategoriaID = actividad.Categoria.Id
 
 	return actividadDto, nil
+}
+
+func (s *actividadService) GetAllActividades() ([]dto.ActivityDto, error) {
+	var actividades []models.Activity = actividadCliente.GetAllActividades()
+	var actividadesDto []dto.ActivityDto
+
+	for _, actividad := range actividades {
+		var actividadDto dto.ActivityDto
+		actividadDto.Titulo = actividad.Titulo
+		actividadDto.Id = actividad.Id
+		actividadDto.Descripcion = actividad.Descripcion
+		actividadDto.Cupo = actividad.Cupo
+		actividadDto.DescripcionCategoria = actividad.Categoria.Nombre
+		actividadDto.CategoriaID = actividad.Categoria.Id
+
+		actividadesDto = append(actividadesDto, actividadDto)
+	}
+
+	return actividadesDto, nil
 }

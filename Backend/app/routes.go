@@ -9,9 +9,9 @@ func mapUrls() {
 	router.POST("/login", handlers.Login)
 	router.POST("/register", handlers.Register)
 
-	// router.GET("/actividad", handlers.GetAllActividades)
+	router.GET("/actividad", actividadHandler.GetAllActividades)
 	router.GET("/actividad/:id", actividadHandler.GetActividadById)
-	// router.POST("/actividad", handlers.AddActividad)
+	//router.POST("/actividad", handlers.AddActividad)
 	// router.PUT("/actividad/:id", handlers.UpdateActividad)
 	// router.DELETE("/actividad/:id", handlers.DeleteActividad)
 
