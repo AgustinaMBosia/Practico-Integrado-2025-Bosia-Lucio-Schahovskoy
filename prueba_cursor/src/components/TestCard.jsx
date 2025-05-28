@@ -10,8 +10,8 @@ const TestActivityCard = () => {
   useEffect(() => {
     const fetchActivity = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/actividades/1');
-        setActivity(response.data); // Asegurate que el backend devuelva un objeto, no un array
+        const response = await axios.get('http://localhost:8080/actividad/1');
+        setActivity(response.data);
       } catch (err) {
         setError(err.message);
       } finally {

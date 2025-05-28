@@ -4,6 +4,7 @@ import '../styles/Home.css';
 import GymHeader from '../components/GymHeader';
 import SearchBar from '../components/SearchBar';
 import Icons from '../components/Icons';
+import TestCard from '../components/TestCard';
 
 const Home = () => {
     return (
@@ -19,6 +20,10 @@ const Home = () => {
 
             <div>
                 <SearchBar/>
+            </div>
+
+            <div>
+                <TestCard/>
             </div>
 
         </>

@@ -5,31 +5,26 @@ const ActivityCard = ({ activity }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/activities/${activity.id}`);
+    navigate(`/Activities/${activity.id}`);
   };
 
   return (
     <div className="activity-card" onClick={handleClick}>
-      <h3>{activity.name}</h3>
+      <h3>{activity.titulo}</h3>
       
       <div className="schedule-section">
-        <div className="days-container">
-          <p className="schedule-title"><strong>Días:</strong></p>
-            {activity.days.map((day, index) => (
-              <li key={`day-${index}`}>{day}</li>
-            ))}
+        <div className="day-time-item">
+          <p><strong>Día:</strong> {activity.dia}</p>
         </div>
-
-        <div className="times-container">
-          <p className="schedule-title"><strong>Horarios:</strong></p>
-            {activity.time_slots.map((time, index) => (
-              <li key={`time-${index}`}>{time}</li>
-            ))}
+        <div className="day-time-item">
+          <p><strong>Horario:</strong> {activity.horario}</p>
+        </div>
+        <div>
+          <p><strong>Cupo:</strong> {activity.cupo}</p>
         </div>
       </div>
 
-      <p className="instructor"><strong>Profesor:</strong> {activity.instructor}</p>
-     
+      <p className="instructor"><strong>Profesor:</strong> {activity.Instructor?.Nombre || 'Por asignar'}</p>
     </div>
   );
 };
