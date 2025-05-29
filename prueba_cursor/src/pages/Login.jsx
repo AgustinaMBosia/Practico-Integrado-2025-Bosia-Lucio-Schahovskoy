@@ -31,7 +31,7 @@ const Login = () => {
       // Guardar datos del usuario (ajusta según la respuesta de tu API)
       localStorage.setItem('user', JSON.stringify(response.data.user));
       localStorage.setItem('token', response.data.token); // Si usas JWT
-      
+
       navigate('/Home'); // Redirigir al área privada
 
     } catch (err) {
@@ -46,8 +46,9 @@ const Login = () => {
   };
 
   return (
+    <div className='background-login'>
     <div className="form-container">
-      <h1>Iniciar Sesión</h1>
+      <div className='title'>Iniciar Sesión</div>
       {error && <div className="error-message">{error}</div>}
       
       <form onSubmit={handleSubmit}>
@@ -79,6 +80,7 @@ const Login = () => {
           {loading ? 'Cargando...' : 'Ingresar'}
         </button>
       </form>
+    </div>
     </div>
   );
 };

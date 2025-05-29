@@ -5,8 +5,7 @@ import '../styles/ActivityList.css';
 const ActivityList = ({ activities, title, emptyMessage }) => {
     return (
         <div className="activity-list-container">
-            <h1 className="fixed-title">{title}</h1>
-            
+            <div className="fixed-title">{title}</div>
             <div className="scrollable-list">
                 {activities.length > 0 ? (
                     <div className="activities-grid">
@@ -14,6 +13,7 @@ const ActivityList = ({ activities, title, emptyMessage }) => {
                             <ActivityCard 
                                 key={activity.id} 
                                 activity={activity} 
+                                isAdmin={false}
                             />
                         ))}
                     </div>

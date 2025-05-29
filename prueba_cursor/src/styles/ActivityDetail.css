@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bebas+Neue&family=M+PLUS+1+Code:wght@100..700&family=Pixelify+Sans:wght@400..700&display=swap');
+
+.background-activity-detail{
+    background-color: #0d072d;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.nombre-actividad{
+    color: #fff;
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: "M PLUS 1 Code", monospace;
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+
+}
+
+.nombre-atributo{
+    color: #fff;
+    font-size: 1.5vw;
+    font-weight: bold;
+    text-align: center;
+    margin:1rem;
+    text-decoration: underline;
+}
+
+.valor-atributo{
+    color: #fff;
+    font-size: 1.5vw;
+    text-align: center;
+
+}
+
+.details-container{
+    display: flex;
+    flex-direction: column;
+    align-items:baseline;
+    justify-content: left;
+    width: 30vw;
+    height: auto;
+    border-radius: 1vw;
+    overflow:auto;
+    gap: 0.25rem;
+    position:absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    background-color: #0c0918;
+}
+
+.imagen-container{
+    width: 30vw;
+    height: auto;
+    border-radius: 10vw;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    background-color: #0c0918;
+}
+
+.imagen{
+    width: 95%;
+    height: auto;
+    object-fit: cover;
+}
+
+.enroll-button{
+    background-color: #fff;
+    color: #0d072d;
+    border-radius: 10vw;
+    padding: 1rem 2rem;
+    font-weight: bold;
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    cursor: pointer;
+}
+
+.tupla{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: left;
+    width: 100%;
+    height: auto;
+    gap: 0.1rem;
+}

@@ -12,7 +12,8 @@ var Db *gorm.DB
 func GetActividadById(id int) models.Activity {
 	var actividad models.Activity
 
-	Db.Where("id = ?", id).Preload("Category").Preload("Instructor").First(&actividad)
+	// el el preload de Categoria decia "category" y no andaba, lo cambie a "categoria" atte:Karol
+		Db.Where("id = ?", id).Preload("Categoria").Preload("Instructor").First(&actividad)
 	return actividad
 }
 
@@ -27,8 +28,8 @@ func PostActividad(actividad models.Activity) models.Activity {
 func GetAllActividades() []models.Activity {
 	var actividades []models.Activity
 
-	result := Db.Find(&actividades) // agregar un preload de instructores y categorías una vez implementados
-	Db.Preload("Category").Preload("Instructor").Find(&actividades)
+	//aca tmb lo cambie
+	result := Db.Preload("Categoria").Preload("Instructor").Find(&actividades)
 
 	if result.Error != nil {
 		log.Fatal("Error getting all actividades: ", result.Error)

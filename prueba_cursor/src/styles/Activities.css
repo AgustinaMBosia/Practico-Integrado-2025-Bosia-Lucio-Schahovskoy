@@ -3,21 +3,23 @@
     height: 100vh;
     width: 100vw;
     overflow: hidden;
+    display: flex;
 }
 
-.my-activities-container{
+.activities-container{
     background-color: #0c0918;
     height: 100vh;
     width: 85vw;
     right: 0vw;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
-    padding-top: 100px;
+    padding-top: 0px;
 }
 
-h1{
+.titulo-actividades{
     font-size: 3rem;
     font-weight: 600;
     margin-bottom: 2rem;
@@ -27,6 +29,7 @@ h1{
     position: fixed;
     top: 20px;
     z-index: 1;
+    background-color: transparent;
 }
 
 .loading-message, .error-message {

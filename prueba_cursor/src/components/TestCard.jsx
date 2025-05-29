@@ -27,7 +27,7 @@ const TestActivityCard = () => {
   return (
     <div>
       {activity ? (
-        <ActivityCard activity={activity} />
+        <ActivityCard activity={activity} isAdmin={true}/>
       ) : (
         <p>No se encontró la actividad con ID 1</p>
       )}
