@@ -25,6 +25,14 @@ const SearchBar = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    function normalize(text) {
+        return text
+          .toLowerCase()
+          .normalize('NFD')                    // separa acentos
+          .replace(/[\u0300-\u036f]/g, '')    // elimina acentos
+          .replace(/[^a-zA-Z0-9]/g, '');      // elimina caracteres especiales
+      }      
+
     const handleFocus = async () => {
         try {
             const response = await axios.get('http://localhost:8080/actividad');
@@ -43,17 +51,17 @@ const SearchBar = () => {
             return;
         }
 
-        const lowerTerm = searchTerm.toLowerCase();
+        const normalizedTerm = normalize(searchTerm);
 
         const filtro = allActivities.filter((actividad) =>
             [
-                actividad.titulo,
-                actividad.profesor,
-                actividad.categoria,
-                actividad.horario,
-                actividad.dias
+                normalize(actividad.titulo),
+                normalize(actividad.nombre_instructor),
+                normalize(actividad.descripcion),
+                normalize(actividad.horario),
+                normalize(actividad.dia)
             ].some((campo) =>
-                campo?.toLowerCase().includes(lowerTerm)
+                campo?.toLowerCase().includes(normalizedTerm)
             )
         );
 
