@@ -5,7 +5,6 @@ import HomeIcon from '../styles/images/homeicon.svg';
 import UserIcon from '../styles/images/usericon.svg';
 import MenuIcon from '../styles/images/menuicon.svg';
 
-import Activities from '../pages/Activities';
 
 import '../styles/Icon.css';
 
@@ -22,7 +21,7 @@ const Icons = ({
   const handleUserClick = () => setShowUserMenu(!showUserMenu);
   const handleMisActividades = () => navigate('/MyActivities');
   const handleLogout = () => navigate('/');
-  const handleMenuClick = () => navigate('/Activities');
+  const handleMenuClick = () => navigate('/AllActivities');
   return (
     <div className="icon-container">
 

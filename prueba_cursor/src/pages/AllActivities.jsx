@@ -6,7 +6,7 @@ import '../styles/Activities.css';
 import Icons from '../components/Icons';
 import ActivityList from '../components/ActivityList';
 
-const Activities = () => {
+const AllActivities = () => {
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -41,8 +41,7 @@ const Activities = () => {
             <div>
                 <Icons showHome={true} showUser={true} showMenu={false}/>
             </div>
-            <div className='my-activities-container'>
-                <h1>Todas las actividades</h1>
+            <div className='activities-container'>
                 {loading ? (
                     <p>Cargando actividades...</p>
                 ) : error ? (
@@ -50,6 +49,7 @@ const Activities = () => {
                 ) : (
                     <ActivityList 
                         activities={activities}
+                        title="Todas las actividades"
                         emptyMessage="No hay actividades disponibles en este momento"
                     />
                 )}
@@ -58,4 +58,4 @@ const Activities = () => {
     );
 };
 
-export default Activities;
+export default AllActivities;

@@ -41,12 +41,16 @@ func (s *actividadService) GetActividadById(id int) (dto.ActivityDto, error) {
 		return actividadDto, nil
 	}
 
-	actividadDto.Titulo = actividad.Titulo
 	actividadDto.Id = actividad.Id
+	actividadDto.Titulo = actividad.Titulo
+	actividadDto.Horario = actividad.Horario         
+	actividadDto.Dia = actividad.Dia                 
 	actividadDto.Descripcion = actividad.Descripcion
 	actividadDto.Cupo = actividad.Cupo
 	actividadDto.DescripcionCategoria = actividad.Categoria.Nombre
 	actividadDto.CategoriaID = actividad.Categoria.Id
+	actividadDto.InstructorID = actividad.Instructor.Id
+	actividadDto.InstructorNombre = actividad.Instructor.Nombre
 
 	return actividadDto, nil
 }
@@ -57,15 +61,20 @@ func (s *actividadService) GetAllActividades() ([]dto.ActivityDto, error) {
 
 	for _, actividad := range actividades {
 		var actividadDto dto.ActivityDto
-		actividadDto.Titulo = actividad.Titulo
 		actividadDto.Id = actividad.Id
+		actividadDto.Titulo = actividad.Titulo
+		actividadDto.Horario = actividad.Horario       
+		actividadDto.Dia = actividad.Dia               
 		actividadDto.Descripcion = actividad.Descripcion
 		actividadDto.Cupo = actividad.Cupo
 		actividadDto.DescripcionCategoria = actividad.Categoria.Nombre
 		actividadDto.CategoriaID = actividad.Categoria.Id
+		actividadDto.InstructorID = actividad.Instructor.Id
+		actividadDto.InstructorNombre = actividad.Instructor.Nombre
 
 		actividadesDto = append(actividadesDto, actividadDto)
 	}
 
 	return actividadesDto, nil
 }
+
