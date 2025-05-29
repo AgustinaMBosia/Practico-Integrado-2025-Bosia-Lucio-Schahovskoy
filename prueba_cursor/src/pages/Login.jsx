@@ -30,7 +30,6 @@ const Login = () => {
 
       // Guardar datos del usuario (ajusta según la respuesta de tu API)
       localStorage.setItem('user', JSON.stringify(response.data.user));
-      console.log(response.data.user);
       localStorage.setItem('token', response.data.token); // Si usas JWT
 
       navigate('/Home'); // Redirigir al área privada

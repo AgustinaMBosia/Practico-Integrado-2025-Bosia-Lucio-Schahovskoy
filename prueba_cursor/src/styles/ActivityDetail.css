@@ -15,17 +15,18 @@
 
 .nombre-actividad{
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 3rem;
     font-weight: bold;
     font-family: "M PLUS 1 Code", monospace;
     position: absolute;
-    bottom: 2rem;
+    top: 2rem;
     left: 2rem;
+
 }
 
 .nombre-atributo{
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     font-weight: bold;
     text-align: center;
     margin:1rem;
@@ -34,7 +35,7 @@
 
 .valor-atributo{
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     text-align: center;
 
 }
@@ -49,12 +50,28 @@
     border-radius: 1vw;
     overflow:auto;
     gap: 0.25rem;
+    position:absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    background-color: #0c0918;
 }
 
 .imagen-container{
     width: 30vw;
     height: auto;
     border-radius: 10vw;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    background-color: #0c0918;
+}
+
+.imagen{
+    width: 95%;
+    height: auto;
+    object-fit: cover;
 }
 
 .enroll-button{

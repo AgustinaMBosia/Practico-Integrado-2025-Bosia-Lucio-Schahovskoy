@@ -79,21 +79,16 @@ const ActivityDetail = () => {
 
                 <div className='tupla'>
                     <div className='nombre-atributo'>Descripción:</div>
-                    <div className='valor-atributo'>{activity.descripcion}</div>
+                    <div className='valor-atributo'>{activity.Categoria_description || 'Por asignar'}</div>
                 </div>
 
                 <div className='tupla'>
-                    <div className='nombre-atributo'>Categoría:</div>
-                    <div className='valor-atributo'>{activity.categoria_id}</div>
-                </div>
-
-                <div className='tupla'>
-                    <h2>Profesor:</h2>
-                    <p>{activity.instructor_id}</p>
+                    <div className='nombre-atributo'>Profesor:</div>
+                    <div className='valor-atributo'>{activity.nombre_instructor || 'Por asignar'}</div>
                 </div>
             </div>
             <div className='imagen-container'>
-                {/*imagen*/}
+            <img src={activity.imagen} alt="Imagen de la actividad" className='imagen' />
             </div>
             <button className='enroll-button' onClick={handleEnroll}>{isEnrolled ? 'Inscripción exitosa' : 'Inscribirse'}</button>
         </div>

@@ -1,9 +1,12 @@
 .activity-list-container {
     display: flex;
     flex-direction: column;
-    background: transparent;
+    background:transparent;
     height: 100vh;
+    width: auto;
     overflow: hidden;
+    position:  relative;
+    top: 0%;
 }
 
 .fixed-title {
@@ -21,7 +24,9 @@
 
 .scrollable-list {
     flex: 1;
+    background-color: transparent;
     overflow-y: overlay;
+    width: auto;
     padding: 0 2rem 0 2rem;
     scrollbar-gutter: stable; 
     scrollbar-width: thin;
@@ -31,12 +36,15 @@
 .activities-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-    padding-bottom: 6rem;
+    gap: 1rem;
+    padding-bottom: 1rem;
 }
 
 .empty-message {
     text-align: center;
     padding: 2rem;
     color: #666;
+    background-color: #0c0918;
+    border-radius: 1rem;
+    width: 30vw;
 }

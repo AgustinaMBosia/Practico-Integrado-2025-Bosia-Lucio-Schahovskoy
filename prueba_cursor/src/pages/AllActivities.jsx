@@ -38,9 +38,7 @@ const AllActivities = () => {
     
     return (
         <div className='background-container'>
-            <div>
-                <Icons showHome={true} showUser={true} showMenu={false}/>
-            </div>
+            
             <div className='activities-container'>
                 {loading ? (
                     <p>Cargando actividades...</p>
@@ -53,6 +51,9 @@ const AllActivities = () => {
                         emptyMessage="No hay actividades disponibles en este momento"
                     />
                 )}
+            </div>
+            <div>
+                <Icons showHome={true} showUser={true} showMenu={false}/>
             </div>
         </div>
     );

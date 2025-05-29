@@ -15,16 +15,23 @@ const ActivityCard = ({ activity, isAdmin = false }) => {
     navigate(`/Activity/${activity.id}`);
   };
 
+  const handleCardClick = () => {
+    if (!isAdmin) {
+      navigate(`/Activity/${activity.id}`);
+    }
+  };
+
   return (
-    <div className={`activity-card ${isAdmin ? 'admin-card' : ''}`}>
+    <div
+      className={`activity-card ${isAdmin ? 'admin-card' : ''}`}
+      onClick={handleCardClick}
+      style={{ cursor: isAdmin ? 'default' : 'pointer' }}
+    >
       <h3>{activity.titulo}</h3>
       <div>
         <p><strong>Día:</strong> {activity.dia}</p>
         <p><strong>Horario:</strong> {activity.horario}</p>
-        <p><strong>Cupo:</strong> {activity.cupo}</p>
-        <p className="instructor">
-          <strong>Profesor:</strong> {activity.Instructor?.Nombre || 'Por asignar'}
-        </p>
+        <p><strong>Profesor:</strong> {activity.nombre_instructor || 'Por asignar'}</p>
       </div>
 
       {isAdmin && (

@@ -48,3 +48,19 @@ transform: translateX(-50%) translateY(-5px) scale(1.03); /* sube y agranda leve
     object-fit: contain;
     pointer-events: none;
 }
+
+.search-results{
+    width: auto;
+    height: 85vh;
+    background-color: transparent;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}

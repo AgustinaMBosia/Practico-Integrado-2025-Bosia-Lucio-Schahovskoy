@@ -43,7 +43,9 @@ func (s *actividadService) GetActividadById(id int) (dto.ActivityDto, error) {
 
 	actividadDto.Id = actividad.Id
 	actividadDto.Titulo = actividad.Titulo
-	actividadDto.Horario = actividad.Horario         
+	actividadDto.Horario = actividad.Horario  
+	//Esta linea de abajo es la que agregue
+	actividadDto.Imagen = actividad.Imagen      
 	actividadDto.Dia = actividad.Dia                 
 	actividadDto.Descripcion = actividad.Descripcion
 	actividadDto.Cupo = actividad.Cupo
@@ -63,7 +65,9 @@ func (s *actividadService) GetAllActividades() ([]dto.ActivityDto, error) {
 		var actividadDto dto.ActivityDto
 		actividadDto.Id = actividad.Id
 		actividadDto.Titulo = actividad.Titulo
-		actividadDto.Horario = actividad.Horario       
+		actividadDto.Horario = actividad.Horario
+		//Agregue esta linea de abajo
+		actividadDto.Imagen = actividad.Imagen      
 		actividadDto.Dia = actividad.Dia               
 		actividadDto.Descripcion = actividad.Descripcion
 		actividadDto.Cupo = actividad.Cupo
