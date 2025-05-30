@@ -4,24 +4,11 @@ import '../styles/ActivityDetail.css';
 import Icons from '../components/Icons';
 import axios from 'axios';
 
-const ActivityDetail = () => {
+const NewActivity = () => {
     const { id } = useParams(); // ⬅️ Captura el ID desde la URL
     const [activity, setActivity] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isEnrolled, setIsEnrolled] = useState(false);
-
-    const handleEnroll = () => {
-        axios.post(`http://localhost:8080/inscripcion`, {
-            id_usuario: 1,
-            id_actividad: id
-        }).then(response => {
-            console.log("Respuesta desde axios:", response.data);
-        }).catch(error => {
-            console.error("Error al inscribirse:", error);
-        });
-        setIsEnrolled(true);
-    };
 
     useEffect(() => {
         const fetchActivity = async () => {
@@ -42,6 +29,7 @@ const ActivityDetail = () => {
     if (loading) return <div>Cargando...</div>;
     if (error) return <div>{error}</div>;
     if (!activity) return <div>No se encontró la actividad</div>;
+
 
     console.log("Actividad:", activity);
     return (
@@ -83,4 +71,4 @@ const ActivityDetail = () => {
     );
 };
 
-export default ActivityDetail;
+export default NewActivity;
