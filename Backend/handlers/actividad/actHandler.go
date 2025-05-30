@@ -36,3 +36,25 @@ func GetAllActividades(c *gin.Context) {
 
 	c.JSON(http.StatusOK, actividades)
 }
+
+func AddActividad(c *gin.Context) {
+	log.Debug("Add actividad")
+
+	var actividadDto dto.ActivityDto
+
+	if err := c.ShouldBindJSON(&actividadDto); err != nil {
+		log.Error("Error binding JSON: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		return
+	}
+
+	newActividad, err := services.ActividadService.AddActividad(actividadDto)
+
+	if err != nil {
+		log.Error("Error adding actividad: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error adding actividad"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, newActividad)
+}

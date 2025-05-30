@@ -23,6 +23,7 @@ type actividadService struct{}
 type actividadServiceInterface interface {
 	GetActividadById(id int) (dto.ActivityDto, error)
 	GetAllActividades() ([]dto.ActivityDto, error)
+	AddActividad(actividadDto dto.ActivityDto) (dto.ActivityDto, error)
 }
 
 var (
@@ -43,10 +44,10 @@ func (s *actividadService) GetActividadById(id int) (dto.ActivityDto, error) {
 
 	actividadDto.Id = actividad.Id
 	actividadDto.Titulo = actividad.Titulo
-	actividadDto.Horario = actividad.Horario  
+	actividadDto.Horario = actividad.Horario
 	//Esta linea de abajo es la que agregue
-	actividadDto.Imagen = actividad.Imagen      
-	actividadDto.Dia = actividad.Dia                 
+	actividadDto.Imagen = actividad.Imagen
+	actividadDto.Dia = actividad.Dia
 	actividadDto.Descripcion = actividad.Descripcion
 	actividadDto.Cupo = actividad.Cupo
 	actividadDto.DescripcionCategoria = actividad.Categoria.Nombre
@@ -67,8 +68,8 @@ func (s *actividadService) GetAllActividades() ([]dto.ActivityDto, error) {
 		actividadDto.Titulo = actividad.Titulo
 		actividadDto.Horario = actividad.Horario
 		//Agregue esta linea de abajo
-		actividadDto.Imagen = actividad.Imagen      
-		actividadDto.Dia = actividad.Dia               
+		actividadDto.Imagen = actividad.Imagen
+		actividadDto.Dia = actividad.Dia
 		actividadDto.Descripcion = actividad.Descripcion
 		actividadDto.Cupo = actividad.Cupo
 		actividadDto.DescripcionCategoria = actividad.Categoria.Nombre
@@ -81,4 +82,38 @@ func (s *actividadService) GetAllActividades() ([]dto.ActivityDto, error) {
 
 	return actividadesDto, nil
 }
+func (s *actividadService) AddActividad(actividadDto dto.ActivityDto) (dto.ActivityDto, error) {
+	// Permitir CategoriaID e InstructorID vacíos para pruebas
+	var actividad models.Activity
+	actividad.Titulo = actividadDto.Titulo
+	actividad.Horario = actividadDto.Horario
+	actividad.Imagen = actividadDto.Imagen
+	actividad.Dia = actividadDto.Dia
+	actividad.Descripcion = actividadDto.Descripcion
+	actividad.Cupo = actividadDto.Cupo
 
+	// Solo asignar si son distintos de cero
+	if actividadDto.CategoriaID != 0 {
+		actividad.CategoriaID = actividadDto.CategoriaID
+	}
+	if actividadDto.InstructorID != 0 {
+		actividad.InstructorID = actividadDto.InstructorID
+	}
+
+	newActividad := actividadCliente.PostActividad(actividad)
+
+	var newActividadDto dto.ActivityDto
+	newActividadDto.Id = newActividad.Id
+	newActividadDto.Titulo = newActividad.Titulo
+	newActividadDto.Horario = newActividad.Horario
+	newActividadDto.Imagen = newActividad.Imagen
+	newActividadDto.Dia = newActividad.Dia
+	newActividadDto.Descripcion = newActividad.Descripcion
+	newActividadDto.Cupo = newActividad.Cupo
+	newActividadDto.DescripcionCategoria = newActividad.Categoria.Nombre
+	newActividadDto.CategoriaID = newActividad.Categoria.Id
+	newActividadDto.InstructorID = newActividad.Instructor.Id
+	newActividadDto.InstructorNombre = newActividad.Instructor.Nombre
+
+	return newActividadDto, nil
+}

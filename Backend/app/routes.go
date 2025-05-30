@@ -11,9 +11,9 @@ func mapUrls() {
 
 	router.GET("/actividad", actividadHandler.GetAllActividades)
 	router.GET("/actividad/:id", actividadHandler.GetActividadById)
-	//router.POST("/actividad", handlers.AddActividad)
-	// router.PUT("/actividad/:id", handlers.UpdateActividad)
-	// router.DELETE("/actividad/:id", handlers.DeleteActividad)
+	router.POST("/actividad", actividadHandler.AddActividad)
+	// router.PUT("/actividad/:id", actividadHandler.UpdateActividad)
+	// router.DELETE("/actividad/:id", actividadHandler.DeleteActividad)
 
 	// router.GET("/actividad?query=texto", handlers.DeleteActividad)
 
