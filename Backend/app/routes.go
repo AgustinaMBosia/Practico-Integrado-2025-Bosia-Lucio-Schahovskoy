@@ -10,7 +10,7 @@ func mapUrls() {
 	router.POST("/login", handlers.Login)
 	router.POST("/register", handlers.Register)
 
-	//router.GET("/actividad", actividadHandler.GetAllActividades)
+	router.GET("/actividad", actividadHandler.GetAllActividades)
 	router.GET("/actividad/:id", actividadHandler.GetActividadById)
 	router.POST("/actividad", actividadHandler.AddActividad)
 	router.PUT("/actividad/:id", actividadHandler.UpdateActividad)
@@ -22,7 +22,7 @@ func mapUrls() {
 	// lo que se pone en el endpoint es: /actividad/buscar?query=Yoga
 
 	router.GET("/inscripcion/actividad/:id", inscripcionHandler.GetInscripcionByActividadID)
-	// router.GET("/inscripcion/usuario/:id/actividad/:id", handlers.GetInscripcionByUsuarioAndActividadID)
+	router.GET("/inscripcion/usuario/:usuario_id/actividad/:actividad_id", inscripcionHandler.GetInscripcionByUsuarioAndActividadID)
 	router.POST("/inscripcion", inscripcionHandler.AddInscripcion)
 	// router.DELETE("/inscripcion/:usuario_id/:actividad_id", handlers.DeleteIns)
 

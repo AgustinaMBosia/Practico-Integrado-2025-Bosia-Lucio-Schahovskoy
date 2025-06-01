@@ -11,6 +11,7 @@ type inscriptionService struct{}
 type inscripcionServiceInterface interface {
 	AddInscripcion(inscripcionDto dto.InscriptionDto) (dto.InscriptionDto, error)
 	GetInscripcionByActividadID(actividadID uint) (dto.InscriptionsDto, error)
+	GetInscripcionByUsuarioAndActividadID(usuarioID uint, actividadID uint) (dto.InscriptionDto, error)
 }
 
 var (
@@ -50,4 +51,22 @@ func (s *inscriptionService) GetInscripcionByActividadID(actividadID uint) (dto.
 	}
 
 	return inscripcionesDto, nil
+}
+
+func (s *inscriptionService) GetInscripcionByUsuarioAndActividadID(usuarioID uint, actividadID uint) (dto.InscriptionDto, error) {
+	var inscripcionDto dto.InscriptionDto
+	inscripcion := inscripcionClient.GetInscripcionByUsuarioAndActividadID(usuarioID, actividadID)
+
+	if inscripcion.Id == 0 {
+		return inscripcionDto, nil // No se encontró inscripción
+	}
+
+	inscripcionDto.Id = inscripcion.Id
+	inscripcionDto.Fecha = inscripcion.Fecha
+	inscripcionDto.UserID = inscripcion.UserId
+	inscripcionDto.Username = inscripcion.User.Username
+	inscripcionDto.ActivityID = inscripcion.ActivityID
+	inscripcionDto.ActivityName = inscripcion.Activity.Titulo
+
+	return inscripcionDto, nil
 }

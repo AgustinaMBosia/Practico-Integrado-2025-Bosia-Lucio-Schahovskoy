@@ -26,3 +26,12 @@ func GetInscripcionByActividadID(actividadID uint) []models.Inscription {
 	}
 	return inscripciones
 }
+
+func GetInscripcionByUsuarioAndActividadID(usuarioID uint, actividadID uint) models.Inscription {
+	var inscripcion models.Inscription
+	result := Db.Preload("User").Preload("Activity").Where("user_id = ? AND activity_id = ?", usuarioID, actividadID).First(&inscripcion)
+	if result.Error != nil {
+		log.Fatal("Error fetching inscripcion: ", result.Error)
+	}
+	return inscripcion
+}

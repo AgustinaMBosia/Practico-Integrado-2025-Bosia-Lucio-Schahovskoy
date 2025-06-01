@@ -64,3 +64,45 @@ func GetInscripcionByActividadID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, inscripciones)
 }
+
+func GetInscripcionByUsuarioAndActividadID(c *gin.Context) {
+	log.Debug("Get inscripcion by usuario and actividad ID")
+
+	usuarioIDParam := c.Param("usuario_id")
+	actividadIDParam := c.Param("actividad_id")
+
+	if usuarioIDParam == "" || actividadIDParam == "" {
+		log.Error("Usuario ID and Actividad ID are required")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Usuario ID and Actividad ID are required"})
+		return
+	}
+
+	var usuarioID, actividadID uint
+
+	if _, err := fmt.Sscanf(usuarioIDParam, "%d", &usuarioID); err != nil {
+		log.Error("Invalid Usuario ID: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Usuario ID must be a positive integer"})
+		return
+	}
+
+	if _, err := fmt.Sscanf(actividadIDParam, "%d", &actividadID); err != nil {
+		log.Error("Invalid Actividad ID: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Actividad ID must be a positive integer"})
+		return
+	}
+
+	inscripcion, err := services.InscripcionService.GetInscripcionByUsuarioAndActividadID(usuarioID, actividadID)
+
+	if err != nil {
+		log.Error("Error fetching inscripcion: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching inscripcion"})
+		return
+	}
+
+	if (inscripcion == dto.InscriptionDto{}) {
+		c.JSON(http.StatusNotFound, gin.H{"message": "No inscripcion found for this usuario and actividad"})
+		return
+	}
+
+	c.JSON(http.StatusOK, inscripcion)
+}
