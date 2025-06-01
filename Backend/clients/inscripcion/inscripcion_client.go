@@ -35,3 +35,16 @@ func GetInscripcionByUsuarioAndActividadID(usuarioID uint, actividadID uint) mod
 	}
 	return inscripcion
 }
+
+func DeleteInscripcion(usuarioID uint, actividadID uint) {
+	var inscripcion models.Inscription
+	result := Db.Where("user_id = ? AND activity_id = ?", usuarioID, actividadID).First(&inscripcion)
+	if result.Error != nil {
+		log.Fatal("Error finding inscripcion: ", result.Error)
+	}
+
+	result = Db.Delete(&inscripcion)
+	if result.Error != nil {
+		log.Fatal("Error deleting inscripcion: ", result.Error)
+	}
+}

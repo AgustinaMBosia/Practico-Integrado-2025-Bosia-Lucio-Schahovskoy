@@ -106,3 +106,40 @@ func GetInscripcionByUsuarioAndActividadID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, inscripcion)
 }
+
+func DeleteInscripcion(c *gin.Context) {
+	log.Debug("Delete inscripcion")
+
+	usuarioIDParam := c.Param("usuario_id")
+	actividadIDParam := c.Param("actividad_id")
+
+	if usuarioIDParam == "" || actividadIDParam == "" {
+		log.Error("Usuario ID and Actividad ID are required")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Usuario ID and Actividad ID are required"})
+		return
+	}
+
+	var usuarioID, actividadID uint
+
+	if _, err := fmt.Sscanf(usuarioIDParam, "%d", &usuarioID); err != nil {
+		log.Error("Invalid Usuario ID: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Usuario ID must be a positive integer"})
+		return
+	}
+
+	if _, err := fmt.Sscanf(actividadIDParam, "%d", &actividadID); err != nil {
+		log.Error("Invalid Actividad ID: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Actividad ID must be a positive integer"})
+		return
+	}
+
+	err := services.InscripcionService.DeleteInscripcion(usuarioID, actividadID)
+
+	if err != nil {
+		log.Error("Error deleting inscripcion: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting inscripcion"})
+		return
+	}
+
+	c.JSON(http.StatusNoContent, nil)
+}

@@ -24,7 +24,7 @@ func mapUrls() {
 	router.GET("/inscripcion/actividad/:id", inscripcionHandler.GetInscripcionByActividadID)
 	router.GET("/inscripcion/usuario/:usuario_id/actividad/:actividad_id", inscripcionHandler.GetInscripcionByUsuarioAndActividadID)
 	router.POST("/inscripcion", inscripcionHandler.AddInscripcion)
-	// router.DELETE("/inscripcion/:usuario_id/:actividad_id", handlers.DeleteIns)
+	router.DELETE("/inscripcion/usuario/:usuario_id/actividad/:actividad_id", inscripcionHandler.DeleteInscripcion)
 
 	// router.GET("/categoria", handlers.GetAllCategorias)
 	// router.POST("/categoria", handlers.AddCategoria)

@@ -12,6 +12,7 @@ type inscripcionServiceInterface interface {
 	AddInscripcion(inscripcionDto dto.InscriptionDto) (dto.InscriptionDto, error)
 	GetInscripcionByActividadID(actividadID uint) (dto.InscriptionsDto, error)
 	GetInscripcionByUsuarioAndActividadID(usuarioID uint, actividadID uint) (dto.InscriptionDto, error)
+	DeleteInscripcion(usuarioID uint, actividadID uint) error
 }
 
 var (
@@ -69,4 +70,9 @@ func (s *inscriptionService) GetInscripcionByUsuarioAndActividadID(usuarioID uin
 	inscripcionDto.ActivityName = inscripcion.Activity.Titulo
 
 	return inscripcionDto, nil
+}
+
+func (s *inscriptionService) DeleteInscripcion(usuarioID uint, actividadID uint) error {
+	inscripcionClient.DeleteInscripcion(usuarioID, actividadID)
+	return nil
 }
