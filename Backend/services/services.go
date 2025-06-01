@@ -26,6 +26,7 @@ type actividadServiceInterface interface {
 	AddActividad(actividadDto dto.ActivityDto) (dto.ActivityDto, error)
 	UpdateActividad(actividadDto dto.ActivityDto) (dto.ActivityDto, error)
 	DeleteActividad(id int) error
+	BuscarActividad(texto string) ([]dto.ActivityDto, error)
 }
 
 var (
@@ -157,4 +158,29 @@ func (s *actividadService) DeleteActividad(id int) error {
 		return err
 	}
 	return nil
+}
+
+func (s *actividadService) BuscarActividad(texto string) ([]dto.ActivityDto, error) {
+	var actividades []models.Activity = actividadCliente.BuscarActividad(texto)
+	var actividadesDto []dto.ActivityDto
+
+	for _, actividad := range actividades {
+		var actividadDto dto.ActivityDto
+		actividadDto.Id = actividad.Id
+		actividadDto.Titulo = actividad.Titulo
+		actividadDto.Horario = actividad.Horario
+		//Agregue esta linea de abajo
+		actividadDto.Imagen = actividad.Imagen
+		actividadDto.Dia = actividad.Dia
+		actividadDto.Descripcion = actividad.Descripcion
+		actividadDto.Cupo = actividad.Cupo
+		actividadDto.DescripcionCategoria = actividad.Categoria.Nombre
+		actividadDto.CategoriaID = actividad.Categoria.Id
+		actividadDto.InstructorID = actividad.Instructor.Id
+		actividadDto.InstructorNombre = actividad.Instructor.Nombre
+
+		actividadesDto = append(actividadesDto, actividadDto)
+	}
+
+	return actividadesDto, nil
 }

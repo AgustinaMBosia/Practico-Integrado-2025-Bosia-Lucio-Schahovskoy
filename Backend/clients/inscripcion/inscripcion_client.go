@@ -17,3 +17,12 @@ func PostInscripcion(inscripcion models.Inscription) models.Inscription {
 	}
 	return inscripcion
 }
+
+func GetInscripcionByActividadID(actividadID uint) []models.Inscription {
+	var inscripciones []models.Inscription
+	result := Db.Preload("User").Preload("Activity").Where("activity_id = ?", actividadID).Find(&inscripciones)
+	if result.Error != nil {
+		log.Fatal("Error fetching inscripciones: ", result.Error)
+	}
+	return inscripciones
+}

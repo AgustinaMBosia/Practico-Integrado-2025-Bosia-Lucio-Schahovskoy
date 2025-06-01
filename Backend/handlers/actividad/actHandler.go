@@ -99,3 +99,30 @@ func AddActividad(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, newActividad)
 }
+
+func BuscarActividad(c *gin.Context) {
+	log.Debug("Buscar actividad")
+
+	texto := c.Query("query")
+
+	if texto == "" {
+		log.Error("Query parameter 'texto' is required")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Query parameter 'texto' is required"})
+		return
+	}
+
+	actividades, err := services.ActividadService.BuscarActividad(texto)
+
+	if err != nil {
+		log.Error("Error searching actividades: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error searching actividades"})
+		return
+	}
+
+	if len(actividades) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"message": "No actividades found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, actividades)
+}

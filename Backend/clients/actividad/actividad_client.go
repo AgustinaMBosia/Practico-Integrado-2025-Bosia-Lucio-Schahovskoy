@@ -3,6 +3,7 @@ package actividadClient
 import (
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/models"
 	"log"
+	"strings"
 
 	"gorm.io/gorm"
 )
@@ -82,4 +83,28 @@ func DeleteActividad(id int) error {
 	}
 
 	return nil
+}
+
+func BuscarActividad(texto string) []models.Activity {
+	var actividades []models.Activity
+	textoLike := "%" + strings.ToLower(texto) + "%"
+
+	result := Db.
+		Joins("JOIN categories ON categories.id = activities.categoria_id").
+		Preload("Categoria").
+		Preload("Instructor").
+		Where(`
+		LOWER(activities.titulo) LIKE ? OR
+		LOWER(activities.descripcion) LIKE ? OR
+		LOWER(categories.nombre) LIKE ? OR
+		LOWER(activities.horario) LIKE ?`,
+			textoLike, textoLike, textoLike, textoLike,
+		).
+		Find(&actividades)
+
+	if result.Error != nil {
+		log.Println("Error searching actividades:", result.Error)
+	}
+
+	return actividades
 }

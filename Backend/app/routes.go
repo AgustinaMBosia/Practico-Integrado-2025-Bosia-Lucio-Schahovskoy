@@ -10,17 +10,18 @@ func mapUrls() {
 	router.POST("/login", handlers.Login)
 	router.POST("/register", handlers.Register)
 
-	router.GET("/actividad", actividadHandler.GetAllActividades)
+	//router.GET("/actividad", actividadHandler.GetAllActividades)
 	router.GET("/actividad/:id", actividadHandler.GetActividadById)
 	router.POST("/actividad", actividadHandler.AddActividad)
 	router.PUT("/actividad/:id", actividadHandler.UpdateActividad)
 	router.DELETE("/actividad/:id", actividadHandler.DeleteActividad)
 
-	// Endpoint para buscar actividades por texto en título, horario, descripción o categoría
-	//router.GET("/actividad/buscar", actividadHandler.BuscarActividades)
+	// Endpoint para buscar actividades por texto en título, horario, descripción o categoría /actividad?query=texto
+	router.GET("/actividad/buscar", actividadHandler.BuscarActividad)
 
-	// router.GET("/inscripcion/usuario/:id", handlers.GetInscripcionByUsuarioID)
-	// router.GET("/inscripcion/actividad/:id", handlers.GetInscripcionByActividadID)
+	// lo que se pone en el endpoint es: /actividad/buscar?query=Yoga
+
+	router.GET("/inscripcion/actividad/:id", inscripcionHandler.GetInscripcionByActividadID)
 	// router.GET("/inscripcion/usuario/:id/actividad/:id", handlers.GetInscripcionByUsuarioAndActividadID)
 	router.POST("/inscripcion", inscripcionHandler.AddInscripcion)
 	// router.DELETE("/inscripcion/:usuario_id/:actividad_id", handlers.DeleteIns)
