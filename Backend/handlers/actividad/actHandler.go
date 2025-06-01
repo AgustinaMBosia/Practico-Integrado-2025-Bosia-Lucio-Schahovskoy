@@ -3,10 +3,11 @@ package actividadHandler
 import (
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/dto"
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/services"
-	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 func UpdateActividad(c *gin.Context) {

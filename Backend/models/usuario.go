@@ -9,13 +9,3 @@ type User struct {
 }
 
 type Users []User
-
-// FindUserByUsername searches for a user by username in the Users slice.
-func FindUserByUsername(users []User, username string) (*User, bool) {
-	for _, user := range users {
-		if user.Username == username {
-			return &user, true
-		}
-	}
-	return nil, false
-}

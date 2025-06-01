@@ -7,10 +7,10 @@ var mySingInKey = []byte("mySecretKey")
 func GenerateToken(userId int, userName string, userEmail string, userRol string) (string, error) {
 	// Create a new token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"Id":     userId,
-		"Nombre": userName,
-		"Email":  userEmail,
-		"Rol":    userRol,
+		"Id":       userId,
+		"Username": userName,
+		"Email":    userEmail,
+		"Rol":      userRol,
 	})
 
 	// Sign the token with a secret key
