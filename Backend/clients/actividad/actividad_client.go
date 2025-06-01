@@ -13,7 +13,7 @@ func GetActividadById(id int) models.Activity {
 	var actividad models.Activity
 
 	// el el preload de Categoria decia "category" y no andaba, lo cambie a "categoria" atte:Karol
-		Db.Where("id = ?", id).Preload("Categoria").Preload("Instructor").First(&actividad)
+	Db.Where("id = ?", id).Preload("Categoria").Preload("Instructor").First(&actividad)
 	return actividad
 }
 
@@ -36,4 +36,50 @@ func GetAllActividades() []models.Activity {
 	}
 
 	return actividades
+}
+
+func UpdateActividad(id int, actividad models.Activity) models.Activity {
+	var existingActividad models.Activity
+
+	// Verificar si la actividad existe
+	if Db.First(&existingActividad, id).RowsAffected == 0 {
+		log.Println("Actividad not found with ID:", id)
+		return models.Activity{}
+	}
+
+	// Actualizar los campos de la actividad existente
+	existingActividad.Titulo = actividad.Titulo
+	existingActividad.Horario = actividad.Horario
+	existingActividad.Imagen = actividad.Imagen
+	existingActividad.Dia = actividad.Dia
+	existingActividad.Descripcion = actividad.Descripcion
+	existingActividad.Cupo = actividad.Cupo
+	existingActividad.CategoriaID = actividad.CategoriaID
+	existingActividad.InstructorID = actividad.InstructorID
+
+	// Guardar los cambios en la base de datos
+	if err := Db.Save(&existingActividad).Error; err != nil {
+		log.Println("Error updating actividad:", err)
+		return models.Activity{}
+	}
+
+	return existingActividad
+}
+
+func DeleteActividad(id int) error {
+	var actividad models.Activity
+
+	// Verificar si la actividad existe
+	if Db.First(&actividad, id).RowsAffected == 0 {
+		log.Println("Actividad not found with ID:", id)
+		return nil // No error, but no activity found
+	}
+
+	// Eliminar la actividad
+	if err := Db.Delete(&actividad).Error; err != nil {
+		log.Println("Error deleting actividad:", err)
+		return err
+	}
+
+	return nil
 }

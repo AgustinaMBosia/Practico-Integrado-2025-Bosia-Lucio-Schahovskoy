@@ -10,13 +10,6 @@ import (
 
 var Db *gorm.DB
 
-func GetInscripcionById(id int) models.Inscription {
-	var inscripcion models.Inscription
-
-	Db.Where("id = ?", id).Preload("User").Preload("Activity").First(&inscripcion)
-	return inscripcion
-}
-
 func PostInscripcion(inscripcion models.Inscription) models.Inscription {
 	result := Db.Create(&inscripcion)
 	if result.Error != nil {

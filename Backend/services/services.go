@@ -24,6 +24,8 @@ type actividadServiceInterface interface {
 	GetActividadById(id int) (dto.ActivityDto, error)
 	GetAllActividades() ([]dto.ActivityDto, error)
 	AddActividad(actividadDto dto.ActivityDto) (dto.ActivityDto, error)
+	UpdateActividad(actividadDto dto.ActivityDto) (dto.ActivityDto, error)
+	DeleteActividad(id int) error
 }
 
 var (
@@ -116,4 +118,43 @@ func (s *actividadService) AddActividad(actividadDto dto.ActivityDto) (dto.Activ
 	newActividadDto.InstructorNombre = newActividad.Instructor.Nombre
 
 	return newActividadDto, nil
+}
+
+func (s *actividadService) UpdateActividad(actividadDto dto.ActivityDto) (dto.ActivityDto, error) {
+	actividad := models.Activity{
+		Id:           actividadDto.Id,
+		Titulo:       actividadDto.Titulo,
+		Horario:      actividadDto.Horario,
+		Imagen:       actividadDto.Imagen,
+		Dia:          actividadDto.Dia,
+		Descripcion:  actividadDto.Descripcion,
+		Cupo:         actividadDto.Cupo,
+		CategoriaID:  actividadDto.CategoriaID,
+		InstructorID: actividadDto.InstructorID,
+	}
+
+	updatedActividad := actividadCliente.UpdateActividad(actividad.Id, actividad)
+
+	var updatedActividadDto dto.ActivityDto
+	updatedActividadDto.Id = updatedActividad.Id
+	updatedActividadDto.Titulo = updatedActividad.Titulo
+	updatedActividadDto.Horario = updatedActividad.Horario
+	updatedActividadDto.Imagen = updatedActividad.Imagen
+	updatedActividadDto.Dia = updatedActividad.Dia
+	updatedActividadDto.Descripcion = updatedActividad.Descripcion
+	updatedActividadDto.Cupo = updatedActividad.Cupo
+	updatedActividadDto.DescripcionCategoria = updatedActividad.Categoria.Nombre
+	updatedActividadDto.CategoriaID = updatedActividad.Categoria.Id
+	updatedActividadDto.InstructorID = updatedActividad.Instructor.Id
+	updatedActividadDto.InstructorNombre = updatedActividad.Instructor.Nombre
+
+	return updatedActividadDto, nil
+}
+
+func (s *actividadService) DeleteActividad(id int) error {
+	err := actividadCliente.DeleteActividad(id)
+	if err != nil {
+		return err
+	}
+	return nil
 }

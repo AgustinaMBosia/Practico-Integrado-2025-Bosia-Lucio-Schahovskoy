@@ -9,6 +9,46 @@ import (
 	"strconv"
 )
 
+func UpdateActividad(c *gin.Context) {
+	log.Debug("Update actividad id: " + c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	var actividadDto dto.ActivityDto
+
+	if err := c.ShouldBindJSON(&actividadDto); err != nil {
+		log.Error("Error binding JSON: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		return
+	}
+
+	actividadDto.Id = id
+
+	updatedActividad, err := services.ActividadService.UpdateActividad(actividadDto)
+
+	if err != nil {
+		log.Error("Error updating actividad: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error updating actividad"})
+		return
+	}
+
+	c.JSON(http.StatusOK, updatedActividad)
+}
+
+func DeleteActividad(c *gin.Context) {
+	log.Debug("Delete actividad id: " + c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	err := services.ActividadService.DeleteActividad(id)
+
+	if err != nil {
+		log.Error("Error deleting actividad: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting actividad"})
+		return
+	}
+
+	c.JSON(http.StatusNoContent, nil)
+}
+
 func GetActividadById(c *gin.Context) {
 	log.Debug("Actividad id to load: " + c.Param("id"))
 	id, _ := strconv.Atoi(c.Param("id"))
