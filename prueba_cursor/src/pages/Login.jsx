@@ -25,7 +25,7 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:8080/login', {
         Username: username,
-        PasswordHash: password
+        Password: password
       });
 
       // Guardar datos del usuario (ajusta según la respuesta de tu API)
