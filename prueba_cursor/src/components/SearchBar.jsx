@@ -14,6 +14,7 @@ const SearchBar = () => {
 
     const containerRef = useRef();
 
+    // Cerrar lista al hacer clic fuera
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (containerRef.current && !containerRef.current.contains(event.target)) {
@@ -24,44 +25,36 @@ const SearchBar = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    function normalize(text) {
-        return (text || '')
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-zA-Z0-9]/g, '');
-    }
-
     const handleFocus = async () => {
         try {
             const response = await axios.get('http://localhost:8080/actividad');
-            const data = response.data || [];
-            setAllActivities(data);
-            setFilteredActivities(data);
+            setAllActivities(response.data);
+            setFilteredActivities(response.data);
             setShowResults(true);
         } catch (error) {
             console.error('Error al obtener actividades:', error);
-            setAllActivities([]);
-            setFilteredActivities([]);
         }
     };
 
+    // Filtro en múltiples campos
     useEffect(() => {
-        if (!searchTerm.trim()) {
-            setFilteredActivities(allActivities || []);
+        if (searchTerm.trim() === '') {
+            setFilteredActivities(allActivities);
             return;
         }
 
-        const normalizedTerm = normalize(searchTerm);
+        const lowerTerm = searchTerm.toLowerCase();
 
-        const filtro = (allActivities || []).filter((actividad) =>
+        const filtro = allActivities.filter((actividad) =>
             [
-                normalize(actividad.titulo),
-                normalize(actividad.nombre_instructor),
-                normalize(actividad.descripcion),
-                normalize(actividad.horario),
-                normalize(actividad.dia)
-            ].some((campo) => campo.includes(normalizedTerm))
+                actividad.titulo,
+                actividad.profesor,
+                actividad.categoria,
+                actividad.horario,
+                actividad.dias
+            ].some((campo) =>
+                campo?.toLowerCase().includes(lowerTerm)
+            )
         );
 
         setFilteredActivities(filtro);
@@ -69,7 +62,7 @@ const SearchBar = () => {
 
     return (
         <>
-            {showResults && <div className="search-overlay" />}
+            {showResults && <div className="search-overlay" />} {/* Fondo oscurecido */}
 
             <div className="search-container" ref={containerRef}>
                 <div className="search-pack">
@@ -89,10 +82,11 @@ const SearchBar = () => {
                 </div>
 
                 {showResults && (
+
                     <div className="search-results">
                         <div className='activity-list-container'>
                             <ActivityList
-                                activities={filteredActivities || []}
+                                activities={filteredActivities}
                                 title=""
                                 emptyMessage="No hay actividades disponibles en este momento"
                             />
