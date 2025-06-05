@@ -35,6 +35,10 @@ export const UserProvider = ({ children }) => {
 
   // Login: guarda usuario y token
   const login = (userData, token) => {
+    if (!userData || !token) {
+      console.error('Login inválido: faltan datos de usuario o token');
+      return;
+    }
     setUser(userData);
     setToken(token);
     localStorage.setItem('user', JSON.stringify(userData));
@@ -56,17 +60,6 @@ export const UserProvider = ({ children }) => {
       localStorage.setItem('token', token);
     }
   }, [user, token, isLoggedIn]);
-
-  // Cerrar sesión automáticamente al salir de la página
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      logout();
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, []);
 
   return (
     <UserContext.Provider value={{ user, token, isLoggedIn, login, logout }}>

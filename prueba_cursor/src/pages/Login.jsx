@@ -30,18 +30,33 @@ const Login = () => {
         Password: password
       });
 
+      if (!response.data || !response.data.token || !response.data.user) {
+        throw new Error('Respuesta inválida del servidor');
+      }
+
       // Guardar datos del usuario usando el contexto
       const userData = {
-        Id: response.data.Id,
-        Nombre: response.data.Nombre,
-        Email: response.data.Email,
-        Rol: response.data.Rol,
+        Id: response.data.user.id,
+        Email: response.data.user.email,
+        Rol: response.data.user.rol,
+        Username: response.data.user.username,
       };
+
+      // Asegurarse de que los datos del usuario son válidos
+      if (!userData.Id) {
+        throw new Error('Datos de usuario inválidos');
+      }
+
+      // Realizar el login y esperar a que se complete
       login(userData, response.data.token);
 
-      navigate('/Home'); // Redirigir al área privada
+      // Pequeño delay para asegurar que el estado se actualice
+      setTimeout(() => {
+        navigate('/Home', { replace: true });
+      }, 100);
 
     } catch (err) {
+      console.error('Error en login:', err);
       setError(
         err.response?.data?.message || 
         err.message || 
