@@ -5,11 +5,15 @@ import '../styles/Activities.css';
 
 import Icons from '../components/Icons';
 import ActivityList from '../components/ActivityList';
+import { useUser } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const AllActivities = () => {
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { user, isLoggedIn } = useUser();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const cancelToken = axios.CancelToken.source();
@@ -38,7 +42,29 @@ const AllActivities = () => {
     
     return (
         <div className='background-container'>
-            
+            {/* Botón solo para admins */}
+            {isLoggedIn && user.Rol === 'admin' && (
+                <button
+                    style={{
+                        position: 'absolute',
+                        top: '2vw',
+                        right: '2vw',
+                        zIndex: 100,
+                        padding: '0.7vw 1.5vw',
+                        background: '#2400ff',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '1vw',
+                        fontWeight: 'bold',
+                        fontSize: '1.2vw',
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                    }}
+                    onClick={() => navigate('/NewActivity')}
+                >
+                    + Nueva Actividad
+                </button>
+            )}
             <div className='activities-container'>
                 {loading ? (
                     <p>Cargando actividades...</p>

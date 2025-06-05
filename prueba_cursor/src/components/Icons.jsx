@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
 import HomeIcon from '../styles/images/homeicon.svg';
 import UserIcon from '../styles/images/usericon.svg';
 import MenuIcon from '../styles/images/menuicon.svg';
-
 
 import '../styles/Icon.css';
 
@@ -14,17 +14,29 @@ const Icons = ({
   showMenu = true
 }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showMenuDropdown, setShowMenuDropdown] = useState(false);
+  const [logoutMessage, setLogoutMessage] = useState('');
   const navigate = useNavigate();
+  const { logout, isLoggedIn } = useUser();
 
   const handleHomeClick = () => navigate('/Home');
   const handleUserClick = () => setShowUserMenu(!showUserMenu);
   const handleMisActividades = () => navigate('/MyActivities');
-  const handleLogout = () => navigate('/');
+  const handleLogout = () => {
+    logout();
+    setLogoutMessage('Sesión cerrada correctamente.');
+    setTimeout(() => {
+      setLogoutMessage('');
+      navigate('/');
+    }, 1200);
+  };
   const handleMenuClick = () => navigate('/AllActivities');
   return (
     <div className="icon-container">
-
+      {logoutMessage && (
+        <div className="logout-message" style={{ color: 'lime', fontWeight: 'bold', marginBottom: '1vw' }}>
+          {logoutMessage}
+        </div>
+      )}
       {/* Contenedor fijo para Home */}
       <div
         className="icon-wrapper"
