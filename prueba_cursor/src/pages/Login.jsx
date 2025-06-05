@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useUser } from '../context/UserContext';
 
 import '../styles/Login.css';
 
@@ -10,6 +11,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,9 +30,14 @@ const Login = () => {
         PasswordHash: password
       });
 
-      // Guardar datos del usuario (ajusta según la respuesta de tu API)
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      localStorage.setItem('token', response.data.token); // Si usas JWT
+      // Guardar datos del usuario usando el contexto
+      const userData = {
+        Id: response.data.Id,
+        Nombre: response.data.Nombre,
+        Email: response.data.Email,
+        Rol: response.data.Rol,
+      };
+      login(userData, response.data.token);
 
       navigate('/Home'); // Redirigir al área privada
 
@@ -47,7 +54,7 @@ const Login = () => {
 
   return (
     <div className='background-login'>
-    <div className="form-container">
+    <div className="form-container-login">
       <div className='title'>Iniciar Sesión</div>
       {error && <div className="error-message">{error}</div>}
       
@@ -84,5 +91,6 @@ const Login = () => {
     </div>
   );
 };
+
 
 export default Login;
