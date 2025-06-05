@@ -9,7 +9,6 @@ const ActivityDetail = () => {
     const [activity, setActivity] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    //const [instructor, setInstructor] = useState(null);
     const [isEnrolled, setIsEnrolled] = useState(false);
 
     const handleEnroll = () => {
@@ -40,20 +39,9 @@ const ActivityDetail = () => {
         fetchActivity();
     }, [id]);
 
-    /*useEffect(() => {
-        const fetchInstructor = async () => {
-          const res = await axios.get(`http://localhost:8080/instructores/${activity.instructor_id}`);
-          setInstructor(res.data);
-        };
-      
-        if (activity.instructor_id) fetchInstructor();
-      }, [activity]);
-      */
-
     if (loading) return <div>Cargando...</div>;
     if (error) return <div>{error}</div>;
     if (!activity) return <div>No se encontró la actividad</div>;
-
 
     console.log("Actividad:", activity);
     return (

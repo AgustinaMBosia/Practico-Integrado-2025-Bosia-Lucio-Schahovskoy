@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useUser } from '../context/UserContext';
 
 import '../styles/Login.css';
 
@@ -10,6 +11,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,13 +30,33 @@ const Login = () => {
         Password: password
       });
 
-      // Guardar datos del usuario (ajusta según la respuesta de tu API)
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      localStorage.setItem('token', response.data.token); // Si usas JWT
+      if (!response.data || !response.data.token || !response.data.user) {
+        throw new Error('Respuesta inválida del servidor');
+      }
 
-      navigate('/Home'); // Redirigir al área privada
+      // Guardar datos del usuario usando el contexto
+      const userData = {
+        Id: response.data.user.id,
+        Email: response.data.user.email,
+        Rol: response.data.user.rol,
+        Username: response.data.user.username,
+      };
+
+      // Asegurarse de que los datos del usuario son válidos
+      if (!userData.Id) {
+        throw new Error('Datos de usuario inválidos');
+      }
+
+      // Realizar el login y esperar a que se complete
+      login(userData, response.data.token);
+
+      // Pequeño delay para asegurar que el estado se actualice
+      setTimeout(() => {
+        navigate('/Home', { replace: true });
+      }, 100);
 
     } catch (err) {
+      console.error('Error en login:', err);
       setError(
         err.response?.data?.message || 
         err.message || 
@@ -47,7 +69,7 @@ const Login = () => {
 
   return (
     <div className='background-login'>
-    <div className="form-container">
+    <div className="form-container-login">
       <div className='title'>Iniciar Sesión</div>
       {error && <div className="error-message">{error}</div>}
       
@@ -84,5 +106,6 @@ const Login = () => {
     </div>
   );
 };
+
 
 export default Login;

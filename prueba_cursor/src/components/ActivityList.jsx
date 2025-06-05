@@ -2,12 +2,13 @@ import React from 'react';
 import ActivityCard from './ActivityCard';
 import '../styles/ActivityList.css';
 
-const ActivityList = ({ activities, title, emptyMessage }) => {
+const ActivityList = ({ activities = [], title, emptyMessage }) => {
+
     return (
         <div className="activity-list-container">
             <div className="fixed-title">{title}</div>
             <div className="scrollable-list">
-                {activities.length > 0 ? (
+                {activities && activities.length > 0 ? (
                     <div className="activities-grid">
                         {activities.map(activity => (
                             <ActivityCard 

@@ -38,3 +38,24 @@
     margin-top: 2rem;
     font-size: 1.2rem;
 }
+
+.new-activity-button{
+    position: absolute;
+    top: 2vw;
+    left: 2vw;
+    width: 3vw;
+    height: 3vw;
+    z-index: 100;
+    padding: 0.7vw 1.5vw;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-image: url('../styles/images/newactivity.svg');
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease;
+}
+
+.new-activity-button:hover{
+    transform: scale(1.1);
+}

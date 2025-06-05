@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useUser } from '../context/UserContext';
 
 import '../styles/Activities.css';
 
@@ -10,13 +11,19 @@ const MyActivities = () => {
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { user, isLoggedIn } = useUser();
 
     useEffect(() => {
+        if (!isLoggedIn) {
+            setError('Debes iniciar sesión para ver tus actividades.');
+            setLoading(false);
+            return;
+        }
         const cancelToken = axios.CancelToken.source();
 
         const fetchActivities = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/usuario/${userId}/actividad`, {
+                const response = await axios.get(`http://localhost:8080/inscripcion/usuario/${user.Id}`, {
                     cancelToken: cancelToken.token
                 });
                 setActivities(response.data);
@@ -34,7 +41,7 @@ const MyActivities = () => {
         return () => {
             cancelToken.cancel();
         };
-    }, []);
+    }, [user.Id, isLoggedIn]);
     
     return (
         <div className='background-container'>
