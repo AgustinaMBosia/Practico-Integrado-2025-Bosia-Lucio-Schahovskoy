@@ -1,59 +1,26 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Home from './pages/Home';
+import { useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import Home from './pages/Home'
 import MyActivities from './pages/MyActivities';
 import AllActivities from './pages/AllActivities';
 import ActivityDetail from './pages/ActivityDetail';
 import Login from './pages/Login';
-import { useUser } from './context/UserContext';
-import NewActivity from './pages/NewActivity';
-
-function PrivateRoute({ children }) {
-  const { isLoggedIn } = useUser();
-  return isLoggedIn ? children : <Navigate to="/" replace />;
-}
-
-function PublicOnlyRoute({ children }) {
-  const { isLoggedIn } = useUser();
-  return isLoggedIn ? <Navigate to="/Home" replace /> : children;
-}
 
 function App() {
+
   return (
+    
     <Router>
       <Routes>
-        <Route path="/" element={
-          <PublicOnlyRoute>
-            <Login />
-          </PublicOnlyRoute>
-        } />
-        <Route path="/Home" element={
-          <PrivateRoute>
-            <Home />
-          </PrivateRoute>
-        } />
-        <Route path="/MyActivities" element={
-          <PrivateRoute>
-            <MyActivities />
-          </PrivateRoute>
-        } />
-        <Route path="/AllActivities" element={
-          <PrivateRoute>
-            <AllActivities />
-          </PrivateRoute>
-        } />
-        <Route path="/Activity/:id" element={
-          <PrivateRoute>
-            <ActivityDetail />
-          </PrivateRoute>
-        } />
-        <Route path="/NewActivity" element={
-          <PrivateRoute>
-            <NewActivity />
-          </PrivateRoute>
-        } />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/MyActivities" element={<MyActivities />} />
+        <Route path="/AllActivities" element={<AllActivities />} />
+        <Route path="/Activity/:id" element={<ActivityDetail />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
