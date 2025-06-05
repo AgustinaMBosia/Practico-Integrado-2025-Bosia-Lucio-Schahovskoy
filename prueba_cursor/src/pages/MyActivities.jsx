@@ -23,7 +23,7 @@ const MyActivities = () => {
 
         const fetchActivities = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/inscripcion/usuario/${user.Id}`, {
+                const response = await axios.get(`http://localhost:8080/inscripcion/usuario/${user.Id}/actividad/`, {
                     cancelToken: cancelToken.token
                 });
                 setActivities(response.data);

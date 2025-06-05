@@ -43,26 +43,11 @@ const AllActivities = () => {
     return (
         <div className='background-container'>
             {/* Botón solo para admins */}
-            {isLoggedIn && user.Rol === 'admin' && (
+            {isLoggedIn && user.Rol && (
                 <button
-                    style={{
-                        position: 'absolute',
-                        top: '2vw',
-                        right: '2vw',
-                        zIndex: 100,
-                        padding: '0.7vw 1.5vw',
-                        background: '#2400ff',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '1vw',
-                        fontWeight: 'bold',
-                        fontSize: '1.2vw',
-                        cursor: 'pointer',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-                    }}
+                    className='new-activity-button'
                     onClick={() => navigate('/NewActivity')}
                 >
-                    + Nueva Actividad
                 </button>
             )}
             <div className='activities-container'>

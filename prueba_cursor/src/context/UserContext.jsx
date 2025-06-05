@@ -3,9 +3,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 // Estructura de usuario
 const defaultUser = {
   Id: null,
-  Nombre: '',
   Email: '',
   Rol: '',
+  Username: ''
 };
 
 const UserContext = createContext();
