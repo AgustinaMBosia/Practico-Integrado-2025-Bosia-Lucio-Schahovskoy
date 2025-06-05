@@ -1,5 +1,3 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-
 // Estructura de usuario
 const defaultUser = {
   Id: null,

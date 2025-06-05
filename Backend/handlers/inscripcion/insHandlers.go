@@ -143,3 +143,37 @@ func DeleteInscripcion(c *gin.Context) {
 
 	c.JSON(http.StatusNoContent, nil)
 }
+func GetInscripcionesByUsuarioID(c *gin.Context) {
+	log.Debug("Get inscripciones by usuario ID")
+
+	usuarioIDParam := c.Param("usuario_id")
+
+	if usuarioIDParam == "" {
+		log.Error("Usuario ID is required")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Usuario ID is required"})
+		return
+	}
+
+	var usuarioID uint
+
+	if _, err := fmt.Sscanf(usuarioIDParam, "%d", &usuarioID); err != nil {
+		log.Error("Invalid Usuario ID: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Usuario ID must be a positive integer"})
+		return
+	}
+
+	inscripciones, err := services.InscripcionService.GetInscripcionesByUsuarioID(usuarioID)
+
+	if err != nil {
+		log.Error("Error fetching inscripciones: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching inscripciones"})
+		return
+	}
+
+	if len(inscripciones) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"message": "No inscripciones found for this usuario"})
+		return
+	}
+
+	c.JSON(http.StatusOK, inscripciones)
+}
