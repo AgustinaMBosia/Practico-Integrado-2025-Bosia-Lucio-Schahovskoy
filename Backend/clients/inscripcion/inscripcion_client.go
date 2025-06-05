@@ -48,3 +48,12 @@ func DeleteInscripcion(usuarioID uint, actividadID uint) {
 		log.Fatal("Error deleting inscripcion: ", result.Error)
 	}
 }
+
+func GetInscripcionesByUsuarioID(usuarioID uint) []models.Inscription {
+	var inscripciones []models.Inscription
+	result := Db.Preload("User").Preload("Activity").Where("user_id = ?", usuarioID).Find(&inscripciones)
+	if result.Error != nil {
+		log.Fatal("Error fetching inscripciones: ", result.Error)
+	}
+	return inscripciones
+}

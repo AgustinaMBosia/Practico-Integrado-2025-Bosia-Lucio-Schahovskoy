@@ -5,7 +5,7 @@ type UserDto struct {
 	PasswordHash string `json:"Password"`
 	Username     string `json:"Username"`
 	Email        string `json:"email"`
-	Rol          string `json:"rol"`
+	Rol          bool   `json:"rol"`
 }
 
 type UsersDto []UserDto

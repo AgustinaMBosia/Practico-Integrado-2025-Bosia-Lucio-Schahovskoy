@@ -13,6 +13,7 @@ type inscripcionServiceInterface interface {
 	GetInscripcionByActividadID(actividadID uint) (dto.InscriptionsDto, error)
 	GetInscripcionByUsuarioAndActividadID(usuarioID uint, actividadID uint) (dto.InscriptionDto, error)
 	DeleteInscripcion(usuarioID uint, actividadID uint) error
+	GetInscripcionesByUsuarioID(usuarioID uint) (dto.InscriptionsDto, error)
 }
 
 var (
@@ -75,4 +76,23 @@ func (s *inscriptionService) GetInscripcionByUsuarioAndActividadID(usuarioID uin
 func (s *inscriptionService) DeleteInscripcion(usuarioID uint, actividadID uint) error {
 	inscripcionClient.DeleteInscripcion(usuarioID, actividadID)
 	return nil
+}
+
+func (s *inscriptionService) GetInscripcionesByUsuarioID(usuarioID uint) (dto.InscriptionsDto, error) {
+	var inscripcionesDto dto.InscriptionsDto
+	inscripciones := inscripcionClient.GetInscripcionesByUsuarioID(usuarioID)
+
+	for _, inscripcion := range inscripciones {
+		inscripcionDto := dto.InscriptionDto{
+			Id:           inscripcion.Id,
+			Fecha:        inscripcion.Fecha,
+			UserID:       inscripcion.UserId,
+			Username:     inscripcion.User.Username,
+			ActivityID:   inscripcion.ActivityID,
+			ActivityName: inscripcion.Activity.Titulo,
+		}
+		inscripcionesDto = append(inscripcionesDto, inscripcionDto)
+	}
+
+	return inscripcionesDto, nil
 }
