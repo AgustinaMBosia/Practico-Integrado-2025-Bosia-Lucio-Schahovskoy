@@ -6,6 +6,8 @@ import (
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/models"
 
 	"gorm.io/gorm"
+
+	"errors"
 )
 
 var Db *gorm.DB
@@ -29,10 +31,18 @@ func GetInscripcionByActividadID(actividadID uint) []models.Inscription {
 
 func GetInscripcionByUsuarioAndActividadID(usuarioID uint, actividadID uint) models.Inscription {
 	var inscripcion models.Inscription
-	result := Db.Preload("User").Preload("Activity").Where("user_id = ? AND activity_id = ?", usuarioID, actividadID).First(&inscripcion)
+	result := Db.Preload("User").Preload("Activity").
+		Where("user_id = ? AND activity_id = ?", usuarioID, actividadID).
+		First(&inscripcion)
+
 	if result.Error != nil {
-		log.Fatal("Error fetching inscripcion: ", result.Error)
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return models.Inscription{} // inscripción no encontrada, id = 0
+		}
+		log.Printf("Error fetching inscripcion: %v", result.Error)
+		return models.Inscription{}
 	}
+
 	return inscripcion
 }
 
