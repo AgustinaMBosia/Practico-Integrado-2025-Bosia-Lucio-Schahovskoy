@@ -3,7 +3,7 @@ import ActivityCard from './ActivityCard';
 import '../styles/ActivityList.css';
 import { useUser } from '../context/UserContext';
 
-
+// Lista scrolleable de tarjetas de actividades
 const ActivityList = ({ activities = [], title, emptyMessage }) => {
     const { isAdmin } = useUser();
     return (

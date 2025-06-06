@@ -1,20 +1,23 @@
 import '../styles/ActivityCard.css';
 import { useNavigate } from 'react-router-dom';
 
+// Muestra los datos "basicos" de una actividad, al clickear te lleva a la página de la actividad
 const ActivityCard = ({ activity, isAdmin }) => {
   const navigate = useNavigate();
 
+  // Funcionalidades de admins
   const handleDelete = (e) => {
     e.stopPropagation();
     console.log('Eliminar actividad:', activity.id);
+    //implementar delete
     window.location.reload();
   };
-
   const handleInfoClick = (e) => {
     e.stopPropagation();
     navigate(`/Activity/${activity.id}`);
   };
 
+  // Funcionalidad de usuarios
   const handleCardClick = () => {
     if (!isAdmin) {
       navigate(`/Activity/${activity.id}`);

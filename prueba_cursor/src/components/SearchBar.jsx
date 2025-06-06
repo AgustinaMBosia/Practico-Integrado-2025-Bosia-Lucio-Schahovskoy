@@ -6,6 +6,7 @@ import '../styles/ActivityList.css';
 
 import ActivityList from '../components/ActivityList';
 
+// Barra de búsqueda onchange por diversos parámetros, normalizado
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [allActivities, setAllActivities] = useState([]);
@@ -24,6 +25,7 @@ const SearchBar = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    // Normaliza el texto en todos los aspectos
     function normalize(text) {
         return (text || '')
             .toLowerCase()
@@ -46,6 +48,7 @@ const SearchBar = () => {
         }
     };
 
+    // Filtra por parámetros
     useEffect(() => {
         if (!searchTerm.trim()) {
             setFilteredActivities(allActivities || []);

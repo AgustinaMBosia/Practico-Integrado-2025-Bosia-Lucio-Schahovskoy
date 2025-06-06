@@ -8,6 +8,7 @@ import MenuIcon from '../styles/images/menuicon.svg';
 
 import '../styles/Icon.css';
 
+// Paquete de íconos adaptable a diversas páginas
 const Icons = ({
   showHome = true,
   showUser = true,
@@ -22,6 +23,7 @@ const Icons = ({
   const handleUserClick = () => setShowUserMenu(!showUserMenu);
   const handleMisActividades = () => navigate('/MyActivities');
   const handleLogout = () => {
+    //manejar el logout
     logout();
     setLogoutMessage('Sesión cerrada correctamente.');
     setTimeout(() => {
@@ -80,7 +82,7 @@ const Icons = ({
           alt="Menú"
           onClick={handleMenuClick}
         />
-      </div>    
+      </div>
 
     </div>
   );

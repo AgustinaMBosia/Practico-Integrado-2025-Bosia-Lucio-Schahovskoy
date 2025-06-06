@@ -7,8 +7,7 @@ import axios from 'axios';
 
 const ActivityDetail = () => {
     const { id } = useParams(); // ID de la actividad
-    const { user, isLoggedIn, isAdmin } = useUser();
-
+    const { user, isLoggedIn} = useUser();
     const [activity, setActivity] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -104,13 +103,16 @@ const ActivityDetail = () => {
                 <img src={activity.imagen} alt="Imagen de la actividad" className='imagen' />
             </div>
 
+            {/* Solo deja inscribirse a los usuarios loggeados */}
             {isLoggedIn &&(
                 <button
                     className='enroll-button'
                     onClick={handleEnroll}
                     disabled={isEnrolled}
+                    // Si está inscripto no permite usar el botón
                 >
-                    {isEnrolled ? 'Inscripto' : 'Inscribirse'}
+                    {/* Si ya está isncripto cambia el mensaje */}
+                    {isEnrolled ? 'Inscripto' : 'Inscribirse'} 
                 </button>
             )}
         </div>
