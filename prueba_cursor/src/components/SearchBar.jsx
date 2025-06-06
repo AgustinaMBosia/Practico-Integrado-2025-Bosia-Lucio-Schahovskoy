@@ -48,27 +48,31 @@ const SearchBar = () => {
         }
     };
 
-    // Filtra por parámetros
+    // Realiza la búsqueda contra el backend
     useEffect(() => {
-        if (!searchTerm.trim()) {
-            setFilteredActivities(allActivities || []);
-            return;
-        }
+        const fetchFilteredActivities = async () => {
+            if (!searchTerm.trim()) {
+                setFilteredActivities([]);
+                return;
+            }
 
-        const normalizedTerm = normalize(searchTerm);
+            try {
+                const res = await axios.get(`http://localhost:8080/actividad/buscar`, {
+                    params: { query: searchTerm }
+                });
+                setFilteredActivities(res.data || []);
+            } catch (error) {
+                console.error('Error al buscar actividades:', error);
+                setFilteredActivities([]);
+            }
+        };
 
-        const filtro = (allActivities || []).filter((actividad) =>
-            [
-                normalize(actividad.titulo),
-                normalize(actividad.nombre_instructor),
-                normalize(actividad.descripcion),
-                normalize(actividad.horario),
-                normalize(actividad.dia)
-            ].some((campo) => campo.includes(normalizedTerm))
-        );
+        const delayDebounce = setTimeout(() => {
+            fetchFilteredActivities();
+        }, 300); // Espera 300ms luego de que el usuario deje de tipear
 
-        setFilteredActivities(filtro);
-    }, [searchTerm, allActivities]);
+        return () => clearTimeout(delayDebounce);
+    }, [searchTerm]);
 
     return (
         <>
