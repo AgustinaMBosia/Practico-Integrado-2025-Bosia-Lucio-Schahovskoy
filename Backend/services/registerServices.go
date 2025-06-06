@@ -22,7 +22,6 @@ func init() {
 }
 
 func (s *registerService) UserRegister(userDto dto.UserDto) (dto.UserDto, error) {
-	// Check if the username already exists
 	var existingUser models.User
 	if err := config.Db.Where("username = ?", userDto.Username).First(&existingUser).Error; err == nil {
 		return dto.UserDto{}, errors.New("username already exists")

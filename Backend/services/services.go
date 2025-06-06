@@ -169,7 +169,6 @@ func (s *actividadService) BuscarActividad(texto string) ([]dto.ActivityDto, err
 		actividadDto.Id = actividad.Id
 		actividadDto.Titulo = actividad.Titulo
 		actividadDto.Horario = actividad.Horario
-		//Agregue esta linea de abajo
 		actividadDto.Imagen = actividad.Imagen
 		actividadDto.Dia = actividad.Dia
 		actividadDto.Descripcion = actividad.Descripcion

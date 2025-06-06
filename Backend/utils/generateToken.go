@@ -1,19 +1,22 @@
 package utils
 
-import "github.com/golang-jwt/jwt"
+import (
+	"time"
+
+	"github.com/golang-jwt/jwt"
+)
 
 var mySingInKey = []byte("mySecretKey")
 
 func GenerateToken(userId int, userName string, userEmail string, userRol string) (string, error) {
-	// Create a new token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"Id":       userId,
 		"Username": userName,
 		"Email":    userEmail,
 		"Rol":      userRol,
+		"exp":      time.Now().Add(time.Hour * 1).Unix(),
 	})
 
-	// Sign the token with a secret key
 	tokenString, err := token.SignedString(mySingInKey)
 	if err != nil {
 		return "", err
