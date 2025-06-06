@@ -97,8 +97,9 @@ func BuscarActividad(texto string) []models.Activity {
 		LOWER(activities.titulo) LIKE ? OR
 		LOWER(activities.descripcion) LIKE ? OR
 		LOWER(categories.nombre) LIKE ? OR
+		LOWER(activities.dia) LIKE ? OR
 		LOWER(activities.horario) LIKE ?`,
-			textoLike, textoLike, textoLike, textoLike,
+			textoLike, textoLike, textoLike, textoLike, textoLike,
 		).
 		Find(&actividades)
 

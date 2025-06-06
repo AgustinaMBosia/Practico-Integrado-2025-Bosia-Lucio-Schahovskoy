@@ -19,7 +19,7 @@ func mapUrls() {
 	// Endpoint para buscar actividades por texto en título, horario, descripción o categoría /actividad?query=texto
 	router.GET("/actividad/buscar", actividadHandler.BuscarActividad)
 
-	// lo que se pone en el endpoint es: /actividad/buscar?query=Yoga
+	// lo que se pone en el endpoint es: /actividad?query=Yoga
 
 	router.GET("/inscripcion/actividad/:id", inscripcionHandler.GetInscripcionByActividadID)
 	router.GET("/inscripcion/usuario/:usuario_id/actividad/:actividad_id", inscripcionHandler.GetInscripcionByUsuarioAndActividadID)
