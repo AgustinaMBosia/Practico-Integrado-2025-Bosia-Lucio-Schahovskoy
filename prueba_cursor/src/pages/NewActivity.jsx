@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useUser } from '../context/UserContext';
 
 const NewActivity = () => {
-    const { user, isLoggedIn } = useUser();
+    const {isLoggedIn ,isAdmin} = useUser();
     const navigate = useNavigate();
     const initialForm = {
         titulo: '',
@@ -23,7 +23,7 @@ const NewActivity = () => {
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
 
-    if (!isLoggedIn || user.Rol !== 'admin') {
+    if (!isLoggedIn || !isAdmin) {
         return (
             <div className='background-new-activity'>
                 <Icons showHome={true} showUser={true} showMenu={true} />

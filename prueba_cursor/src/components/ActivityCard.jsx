@@ -1,7 +1,7 @@
 import '../styles/ActivityCard.css';
 import { useNavigate } from 'react-router-dom';
 
-const ActivityCard = ({ activity, isAdmin = false }) => {
+const ActivityCard = ({ activity, isAdmin }) => {
   const navigate = useNavigate();
 
   const handleDelete = (e) => {

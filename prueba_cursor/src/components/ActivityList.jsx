@@ -1,9 +1,11 @@
 import React from 'react';
 import ActivityCard from './ActivityCard';
 import '../styles/ActivityList.css';
+import { useUser } from '../context/UserContext';
+
 
 const ActivityList = ({ activities = [], title, emptyMessage }) => {
-
+    const { isAdmin } = useUser();
     return (
         <div className="activity-list-container">
             <div className="fixed-title">{title}</div>
@@ -14,7 +16,7 @@ const ActivityList = ({ activities = [], title, emptyMessage }) => {
                             <ActivityCard 
                                 key={activity.id} 
                                 activity={activity} 
-                                isAdmin={false}
+                                isAdmin={isAdmin}
                             />
                         ))}
                     </div>

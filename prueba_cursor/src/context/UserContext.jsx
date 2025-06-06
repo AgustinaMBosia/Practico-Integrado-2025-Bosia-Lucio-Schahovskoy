@@ -5,11 +5,12 @@ const defaultUser = {
   Id: null,
   Nombre: '',
   Email: '',
-  Rol: '',
+  Rol: false,
 };
 
 const UserContext = createContext();
 
+// Función segura para parsear usuario desde localStorage
 function safeParseUser(storedUser) {
   if (!storedUser || storedUser === 'undefined') return defaultUser;
   try {
@@ -32,6 +33,8 @@ export const UserProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem('token') || '');
 
   const isLoggedIn = !!token && !!user?.Id;
+
+  const isAdmin = !!user?.Rol;
 
   // Login: guarda usuario y token
   const login = (userData, token) => {
@@ -62,10 +65,11 @@ export const UserProvider = ({ children }) => {
   }, [user, token, isLoggedIn]);
 
   return (
-    <UserContext.Provider value={{ user, token, isLoggedIn, login, logout }}>
+    <UserContext.Provider value={{ user, token, isLoggedIn, isAdmin, login, logout }}>
       {children}
     </UserContext.Provider>
   );
 };
 
+// Hook para acceder al contexto
 export const useUser = () => useContext(UserContext);

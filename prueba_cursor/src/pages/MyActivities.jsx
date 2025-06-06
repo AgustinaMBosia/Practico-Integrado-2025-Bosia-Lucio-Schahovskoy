@@ -23,10 +23,24 @@ const MyActivities = () => {
 
         const fetchActivities = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/inscripcion/usuario/${user.Id}`, {
-                    cancelToken: cancelToken.token
-                });
-                setActivities(response.data);
+                const inscripcionesRes = await axios.get(
+                    `http://localhost:8080/inscripcion/usuario/${user.Id}`,
+                    { cancelToken: cancelToken.token }
+                );
+        
+                const inscripciones = inscripcionesRes.data;
+        
+                // Para cada actividad_id, pedimos la actividad
+                const actividadesPromises = inscripciones.map(insc =>
+                    axios.get(`http://localhost:8080/actividad/${insc.actividad_id}`, {
+                        cancelToken: cancelToken.token
+                    }).then(res => res.data)
+                );
+        
+                // Esperamos todas las actividades
+                const actividades = await Promise.all(actividadesPromises);
+        
+                setActivities(actividades);
             } catch (err) {
                 if (!axios.isCancel(err)) {
                     setError(err.response?.data?.message || 'Error al cargar las actividades');
@@ -35,6 +49,7 @@ const MyActivities = () => {
                 setLoading(false);
             }
         };
+        
 
         fetchActivities();
 
