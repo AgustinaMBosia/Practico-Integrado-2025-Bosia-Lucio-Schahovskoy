@@ -29,9 +29,11 @@ const ActivityDetail = () => {
                 usuario_id: parseInt(user.Id),
             });
             console.log("Inscripción exitosa:", response.data);
+            alert("Inscripción exitosa")
             setIsEnrolled(true);
         } catch (error) {
-            console.error("Error al inscribirse:", error);
+            alert("Error al inscribirse", error)
+            console.error("Error al inscribirse:");
         }
     };
 
