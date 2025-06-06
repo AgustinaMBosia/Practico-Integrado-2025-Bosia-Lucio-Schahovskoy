@@ -13,7 +13,7 @@ const AllActivities = () => {
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { user, isLoggedIn } = useUser();
+    const { user, isLoggedIn, isAdmin } = useUser();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -44,7 +44,7 @@ const AllActivities = () => {
     return (
         <div className='background-container'>
             {/* Botón solo para admins */}
-            {isLoggedIn && user.Rol === 'admin' && (
+            {isLoggedIn && isAdmin && (
                 <button
                     className='new-activity-button'
                     onClick={() => navigate('/NewActivity')}

@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/GymHeader.css';
 
+// Header del gimnasio
 const GymHeader = () => {
     return (
         <div className="gym-header">

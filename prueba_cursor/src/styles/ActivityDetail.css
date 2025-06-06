@@ -107,3 +107,15 @@
     height: auto;
     gap: 0.1rem;
 }
+
+.enroll-button:disabled {
+    background-color: #ffffff;
+    color: #0d072d;
+    cursor: not-allowed;
+}
+
+
+.enroll-button:disabled:hover{
+    background-color: #561616;
+    color: #666;
+}
