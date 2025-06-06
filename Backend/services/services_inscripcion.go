@@ -1,7 +1,7 @@
 package services
 
 import (
-	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/clients/inscripcion"
+	inscripcionClient "Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/clients/inscripcion"
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/dto"
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/models"
 )
