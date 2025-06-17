@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const ActivityDetail = () => {
     const { id } = useParams(); // ID de la actividad
-    const { user, isLoggedIn} = useUser();
+    const { user, isLoggedIn } = useUser();
     const [activity, setActivity] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,15 +20,20 @@ const ActivityDetail = () => {
             return;
         }
 
+        console.log(id)
+        console.log(user.Id)
         try {
             const response = await axios.post(`http://localhost:8080/inscripcion`, {
-                id_usuario: user.Id,
-                id_actividad: id
+                fecha: new Date().toISOString().split('T')[0],
+                actividad_id: parseInt(id),
+                usuario_id: parseInt(user.Id),
             });
             console.log("Inscripción exitosa:", response.data);
+            alert("Inscripción exitosa")
             setIsEnrolled(true);
         } catch (error) {
-            console.error("Error al inscribirse:", error);
+            alert("Error al inscribirse", error)
+            console.error("Error al inscribirse:");
         }
     };
 
@@ -104,15 +109,15 @@ const ActivityDetail = () => {
             </div>
 
             {/* Solo deja inscribirse a los usuarios loggeados */}
-            {isLoggedIn &&(
+            {isLoggedIn && (
                 <button
                     className='enroll-button'
                     onClick={handleEnroll}
                     disabled={isEnrolled}
-                    // Si está inscripto no permite usar el botón
+                // Si está inscripto no permite usar el botón
                 >
                     {/* Si ya está isncripto cambia el mensaje */}
-                    {isEnrolled ? 'Inscripto' : 'Inscribirse'} 
+                    {isEnrolled ? 'Inscripto' : 'Inscribirse'}
                 </button>
             )}
         </div>
