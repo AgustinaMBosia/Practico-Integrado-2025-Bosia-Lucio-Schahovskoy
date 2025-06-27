@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/utils"
+
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -81,8 +83,28 @@ func GetAllActividades(c *gin.Context) {
 func AddActividad(c *gin.Context) {
 	log.Debug("Add actividad")
 
-	var actividadDto dto.ActivityDto
+	// Validar token
+	tokenString := c.GetHeader("Authorization")
+	if tokenString == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Falta el token"})
+		return
+	}
 
+	claims, err := utils.ParseToken(tokenString)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
+		return
+	}
+
+	// Validar rol
+	isAdmin, ok := claims["Rol"].(bool)
+	if !ok || !isAdmin {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Solo administradores pueden crear actividades"})
+		return
+	}
+
+	// Continuar con la lógica habitual
+	var actividadDto dto.ActivityDto
 	if err := c.ShouldBindJSON(&actividadDto); err != nil {
 		log.Error("Error binding JSON: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
@@ -90,7 +112,6 @@ func AddActividad(c *gin.Context) {
 	}
 
 	newActividad, err := services.ActividadService.AddActividad(actividadDto)
-
 	if err != nil {
 		log.Error("Error adding actividad: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error adding actividad"})

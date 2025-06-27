@@ -28,11 +28,11 @@ func (s *loginService) Login(username, password string) (models.User, string, er
 	if err != nil {
 		return models.User{}, "", err
 	}
-	rolStr := "false"
+	roleBool := false
 	if user.Rol {
-		rolStr = "true"
+		roleBool = true
 	}
-	token, err := utils.GenerateToken(user.Id, user.Username, user.Email, rolStr)
+	token, err := utils.GenerateToken(user.Id, user.Username, user.Email, roleBool)
 	if err != nil {
 		return models.User{}, "", err
 	}
