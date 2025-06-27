@@ -10,10 +10,25 @@ import (
 
 	"net/http"
 	//"strconv"
+	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/utils"
 )
 
 func AddInscripcion(c *gin.Context) {
 	log.Debug("Post inscripcion")
+
+	// Validar token
+	tokenString := c.GetHeader("Authorization")
+	if tokenString == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Falta el token"})
+		return
+	}
+
+	_, err := utils.ParseToken(tokenString)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
+		return
+	}
+
 	var inscripcionDto dto.InscriptionDto
 
 	if err := c.ShouldBindJSON(&inscripcionDto); err != nil {
@@ -70,6 +85,19 @@ func GetInscripcionByActividadID(c *gin.Context) {
 func DeleteInscripcion(c *gin.Context) {
 	log.Debug("Delete inscripcion")
 
+	// validar token
+	tokenString := c.GetHeader("Authorization")
+	if tokenString == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Falta el token"})
+		return
+	}
+
+	_, err := utils.ParseToken(tokenString)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
+		return
+	}
+
 	usuarioIDParam := c.Param("usuario_id")
 	actividadIDParam := c.Param("actividad_id")
 
@@ -93,7 +121,7 @@ func DeleteInscripcion(c *gin.Context) {
 		return
 	}
 
-	err := services.InscripcionService.DeleteInscripcion(usuarioID, actividadID)
+	err = services.InscripcionService.DeleteInscripcion(usuarioID, actividadID)
 
 	if err != nil {
 		log.Error("Error deleting inscripcion: ", err)

@@ -16,6 +16,26 @@ func UpdateActividad(c *gin.Context) {
 	log.Debug("Update actividad id: " + c.Param("id"))
 	id, _ := strconv.Atoi(c.Param("id"))
 
+	// Validar token
+	tokenString := c.GetHeader("Authorization")
+	if tokenString == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Falta el token"})
+		return
+	}
+
+	claims, err := utils.ParseToken(tokenString)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
+		return
+	}
+
+	// Validar rol admin
+	isAdmin, ok := claims["Rol"].(bool)
+	if !ok || !isAdmin {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Solo administradores pueden editar actividades"})
+		return
+	}
+
 	var actividadDto dto.ActivityDto
 
 	if err := c.ShouldBindJSON(&actividadDto); err != nil {
@@ -41,15 +61,34 @@ func DeleteActividad(c *gin.Context) {
 	log.Debug("Delete actividad id: " + c.Param("id"))
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	err := services.ActividadService.DeleteActividad(id)
+	//Validar token
+	tokenString := c.GetHeader("Authorization")
+	if tokenString == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Falta el token"})
+		return
+	}
 
+	claims, err := utils.ParseToken(tokenString)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
+		return
+	}
+
+	//Validar rol admin
+	isAdmin, ok := claims["Rol"].(bool)
+	if !ok || !isAdmin {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Solo administradores pueden eliminar actividades"})
+		return
+	}
+
+	err = services.ActividadService.DeleteActividad(id)
 	if err != nil {
 		log.Error("Error deleting actividad: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting actividad"})
 		return
 	}
 
-	c.JSON(http.StatusNoContent, nil)
+	c.JSON(http.StatusNoContent, gin.H{"message": "Actividad borrada correctamente"})
 }
 
 func GetActividadById(c *gin.Context) {
