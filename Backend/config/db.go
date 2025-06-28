@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/models"
 
@@ -34,15 +35,30 @@ func init() {
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	dbName := os.Getenv("DB_NAME")
-	dns := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, dbName)
 
-	Db, err = gorm.Open(mysql.Open(dns), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
-	})
-	if err != nil {
-		log.Fatal("Error connecting to the database: ", err)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, dbName)
+
+	// Intentar conectarse hasta 10 veces con 5 segundos de espera entre intentos
+	const maxRetries = 10
+	const delaySeconds = 5
+
+	fmt.Println("🧪 DB ENV CONFIG:", dbUser, dbPassword, dbHost, dbPort, dbName)
+
+	for i := 1; i <= maxRetries; i++ {
+		Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+			Logger: logger.Default.LogMode(logger.Info),
+		})
+		if err == nil {
+			log.Println("✅ Database connection established successfully")
+			break
+		}
+		log.Printf("❌ Failed to connect to DB (attempt %d/%d): %v", i, maxRetries, err)
+		time.Sleep(delaySeconds * time.Second)
 	}
-	log.Println("Database connection established successfully")
+
+	if err != nil {
+		log.Fatal("❌ Could not connect to the database after several attempts.")
+	}
 
 	usuarioClient.Db = Db
 	inscripcionClient.Db = Db
@@ -57,6 +73,5 @@ func StartDbEngine() {
 	Db.AutoMigrate(&models.Activity{})
 	Db.AutoMigrate(&models.Category{})
 	Db.AutoMigrate(&models.Instructor{})
-	log.Println("Finishing Migration Database Tables")
-
+	log.Println("✅ Finished migrating database tables")
 }
