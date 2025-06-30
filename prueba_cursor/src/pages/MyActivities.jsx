@@ -27,29 +27,42 @@ const MyActivities = () => {
                     `http://localhost:8080/inscripcion/usuario/${user.Id}`,
                     { cancelToken: cancelToken.token }
                 );
-        
+
                 const inscripciones = inscripcionesRes.data;
-        
-                // Para cada actividad_id, pedimos la actividad
+
+                // Si no hay inscripciones, no dispares error
+                if (!Array.isArray(inscripciones) || inscripciones.length === 0) {
+                    setActivities([]); // <-- lista vacía
+                    return;
+                }
+
                 const actividadesPromises = inscripciones.map(insc =>
                     axios.get(`http://localhost:8080/actividad/${insc.actividad_id}`, {
                         cancelToken: cancelToken.token
                     }).then(res => res.data)
                 );
-        
-                // Esperamos todas las actividades
+
                 const actividades = await Promise.all(actividadesPromises);
-        
+
                 setActivities(actividades);
             } catch (err) {
                 if (!axios.isCancel(err)) {
-                    setError(err.response?.data?.message || 'Error al cargar las actividades');
+                    const mensaje = err.response?.data?.message || err.message;
+
+                    if (mensaje && mensaje.toLowerCase().includes("no inscripciones")) {
+                        setActivities([]); // Trátalo como lista vacía
+                    } else {
+                        setError(mensaje || 'Error al cargar las actividades');
+                    }
                 }
             } finally {
                 setLoading(false);
             }
+
         };
-        
+
+
+
 
         fetchActivities();
 
@@ -57,11 +70,11 @@ const MyActivities = () => {
             cancelToken.cancel();
         };
     }, [user.Id, isLoggedIn]);
-    
+
     return (
         <div className='background-container'>
             <div>
-                <Icons showHome={true} showUser={true} showMenu={true}/>
+                <Icons showHome={true} showUser={true} showMenu={true} />
             </div>
             <div className='activities-container'>
                 {loading ? (
@@ -69,7 +82,7 @@ const MyActivities = () => {
                 ) : error ? (
                     <p>{error}</p>
                 ) : (
-                    <ActivityList 
+                    <ActivityList
                         activities={activities}
                         title="Mis actividades"
                         emptyMessage="No estás inscrito en ninguna actividad"
