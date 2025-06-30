@@ -73,3 +73,8 @@ export const UserProvider = ({ children }) => {
 
 // Hook para acceder al contexto
 export const useUser = () => useContext(UserContext);
+// Hook para cerrar sesión desde cualquier componente
+export const useLogout = () => {
+  const { logout } = useUser();
+  return logout;
+};

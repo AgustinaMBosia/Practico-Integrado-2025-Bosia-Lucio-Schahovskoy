@@ -28,16 +28,12 @@
     color: #fff;
     font-size: 1.5vw;
     font-weight: bold;
-    text-align: center;
-    margin:1rem;
-    text-decoration: underline;
 }
 
 .valor-atributo{
     color: #fff;
     font-size: 1.5vw;
-    text-align: center;
-
+    margin:0.5rem;
 }
 
 .details-container{
@@ -55,7 +51,7 @@
     top: 50%;
     left: 60%;
     transform: translate(-50%, -50%);
-    background-color: #0c0918;
+    background-color: #1c0c7a;
 }
 
 .imagen-container{
@@ -67,7 +63,7 @@
     top: 50%;
     left: 30%;
     transform: translate(-50%, -50%);
-    background-color: #0c0918;
+    background-color: #1c0c7a;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -108,14 +104,12 @@
     gap: 0.1rem;
 }
 
-.enroll-button:disabled {
-    background-color: #ffffff;
-    color: #0d072d;
-    cursor: not-allowed;
+.enroll-button.enrolled {
+    background-color: #dc3545;
+    color: white;
 }
 
-
-.enroll-button:disabled:hover{
-    background-color: #561616;
-    color: #666;
+.enroll-button.enrolled:hover {
+    background-color: #b02a37;
+    color: #fff;
 }

@@ -6,6 +6,7 @@ import ActivityDetail from './pages/ActivityDetail';
 import Login from './pages/Login';
 import { useUser } from './context/UserContext';
 import NewActivity from './pages/NewActivity';
+import AxiosInterceptor from './context/AxiosInterceptor';
 
 function PrivateRoute({ children }) {
   const { isLoggedIn } = useUser();
@@ -20,6 +21,7 @@ function PublicOnlyRoute({ children }) {
 function App() {
   return (
     <Router>
+      <AxiosInterceptor />
       <Routes>
         <Route path="/" element={
           <PublicOnlyRoute>
