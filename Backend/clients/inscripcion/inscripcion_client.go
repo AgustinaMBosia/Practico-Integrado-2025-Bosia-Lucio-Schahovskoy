@@ -67,3 +67,21 @@ func GetInscripcionesByUsuarioID(usuarioID uint) []models.Inscription {
 	}
 	return inscripciones
 }
+
+func DeleteInscripcionesByActividadID(id int) {
+	var inscripciones []models.Inscription
+	result := Db.Where("activity_id = ?", id).Find(&inscripciones)
+	if result.Error != nil {
+		log.Fatal("Error finding inscripciones: ", result.Error)
+	}
+
+	if len(inscripciones) == 0 {
+		log.Println("No inscripciones found for activity ID:", id)
+		return
+	}
+
+	result = Db.Delete(&inscripciones)
+	if result.Error != nil {
+		log.Fatal("Error deleting inscripciones: ", result.Error)
+	}
+}

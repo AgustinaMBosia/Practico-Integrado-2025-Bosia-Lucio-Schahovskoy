@@ -3,7 +3,9 @@ package app
 import (
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/handlers"
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/handlers/actividad"
+	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/handlers/categoria"
 	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/handlers/inscripcion"
+	"Practico-Integrado-2025-Bosia-Lucio-Schahovskoy/Backend/handlers/instructor"
 )
 
 func mapUrls() {
@@ -29,14 +31,14 @@ func mapUrls() {
 	// también cambié el DELETE para que se entienda mejor
 	router.DELETE("/inscripcion/usuario/:usuario_id/actividad/:actividad_id", inscripcionHandler.DeleteInscripcion)
 
-	// router.GET("/categoria", handlers.GetAllCategorias)
-	// router.POST("/categoria", handlers.AddCategoria)
-	// router.DELETE("/categoria/:id", handlers.DeleteCategoria)
+	router.GET("/categoria", categoriaHandler.GetAllCategorias)
+	// router.POST("/categoria", categoriaHandler.AddCategoria)
+	// router.DELETE("/categoria/:id", categoriaHandler.DeleteCategoria)
 
-	// router.GET("/instructor", handlers.GetAllInstructores)
-	// router.POST("/instructor", handlers.AddInstructor)
-	// router.PUT("/instructor/:id", handlers.UpdateInstructor)
-	// router.DELETE("/instructor/:id", handlers.DeleteInstructor)
+	router.GET("/instructor", instructorHandler.GetAllInstructors)
+	// router.POST("/instructor", instructorHandler.AddInstructor)
+	// router.PUT("/instructor/:id", instructorHandler.UpdateInstructor)
+	// router.DELETE("/instructor/:id", instructorHandler.DeleteInstructor)
 
 	// FINAL
 	// get de las actividades de un usario

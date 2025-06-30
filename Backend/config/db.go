@@ -74,4 +74,62 @@ func StartDbEngine() {
 	Db.AutoMigrate(&models.Category{})
 	Db.AutoMigrate(&models.Instructor{})
 	log.Println("✅ Finished migrating database tables")
+
+	// 🧪 Poblar tabla users
+	var userCount int64
+	Db.Model(&models.User{}).Count(&userCount)
+	if userCount == 0 {
+		Db.Create(&models.User{Username: "admin", PasswordHash: "$2a$10$ziwjNjQdppZtS1WN7JUcqOXXxkiecIsSaTSIuzMsmiVOrx7kj7hOu", Email: "admin@email.com", Rol: true})
+		Db.Create(&models.User{Username: "usuario", PasswordHash: "$2a$10$ziwjNjQdppZtS1WN7JUcqOXXxkiecIsSaTSIuzMsmiVOrx7kj7hOu", Email: "usuario@email.com", Rol: false})
+	}
+
+	// 🧪 Poblar tabla categories
+	var catCount int64
+	Db.Model(&models.Category{}).Count(&catCount)
+	if catCount == 0 {
+		Db.Create(&models.Category{Nombre: "Yoga"})
+		Db.Create(&models.Category{Nombre: "Zumba"})
+	}
+
+	// 🧪 Poblar tabla instructors
+	var instCount int64
+	Db.Model(&models.Instructor{}).Count(&instCount)
+	if instCount == 0 {
+		Db.Create(&models.Instructor{Nombre: "Ana Torres", Email: "ana@email.com", Telefono: 3511234567})
+		Db.Create(&models.Instructor{Nombre: "Pedro Gómez", Email: "pedro@email.com", Telefono: 3517654321})
+	}
+
+	// 🧪 Poblar tabla activities
+	var actCount int64
+	Db.Model(&models.Activity{}).Count(&actCount)
+	if actCount == 0 {
+		Db.Create(&models.Activity{
+			Titulo:       "Yoga Inicial",
+			Dia:          "Lunes",
+			Horario:      "10:00",
+			Imagen:       "yoga.jpg",
+			Cupo:         15,
+			Descripcion:  "Clase de yoga básica",
+			CategoriaID:  1,
+			InstructorID: 1,
+		})
+		Db.Create(&models.Activity{
+			Titulo:       "Zumba Power",
+			Dia:          "Miércoles",
+			Horario:      "18:00",
+			Imagen:       "zumba.jpg",
+			Cupo:         20,
+			Descripcion:  "Clase de zumba avanzada",
+			CategoriaID:  2,
+			InstructorID: 2,
+		})
+	}
+
+	// 🧪 Poblar tabla inscriptions
+	var inscCount int64
+	Db.Model(&models.Inscription{}).Count(&inscCount)
+	if inscCount == 0 {
+		Db.Create(&models.Inscription{Fecha: "2025-07-01", UserId: 1, ActivityID: 1})
+		Db.Create(&models.Inscription{Fecha: "2025-07-02", UserId: 2, ActivityID: 2})
+	}
 }
