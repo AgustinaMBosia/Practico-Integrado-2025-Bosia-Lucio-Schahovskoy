@@ -9,17 +9,11 @@ import (
 
 var Db *gorm.DB
 
-func GetInstructorById(id int) models.Instructor {
-	var instructor models.Instructor
-
-	Db.Where("id = ?", id).First(&instructor)
-	return instructor
-}
-
-func PostInstructor(instructor models.Instructor) models.Instructor {
-	result := Db.Create(&instructor)
+func GetAllInstructors() []models.Instructor {
+	var instructors []models.Instructor
+	result := Db.Find(&instructors)
 	if result.Error != nil {
-		log.Fatal("Error creating instructor: ", result.Error)
+		log.Fatal("Error fetching instructors: ", result.Error)
 	}
-	return instructor
+	return instructors
 }

@@ -61,26 +61,15 @@ func DeleteActividad(c *gin.Context) {
 	log.Debug("Delete actividad id: " + c.Param("id"))
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	//Validar token
-	tokenString := c.GetHeader("Authorization")
-	if tokenString == "" {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Falta el token"})
-		return
-	}
-
-	claims, err := utils.ParseToken(tokenString)
+	// Primero, borrar las inscripciones de esa actividad
+	err := services.InscripcionService.DeleteInscripcionesByActividadID(id)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
+		log.Error("Error deleting related inscripciones: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting related inscripciones"})
 		return
 	}
 
-	//Validar rol admin
-	isAdmin, ok := claims["Rol"].(bool)
-	if !ok || !isAdmin {
-		c.JSON(http.StatusForbidden, gin.H{"error": "Solo administradores pueden eliminar actividades"})
-		return
-	}
-
+	// Luego, borrar la actividad
 	err = services.ActividadService.DeleteActividad(id)
 	if err != nil {
 		log.Error("Error deleting actividad: ", err)
@@ -88,7 +77,7 @@ func DeleteActividad(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusNoContent, gin.H{"message": "Actividad borrada correctamente"})
+	c.JSON(http.StatusNoContent, nil)
 }
 
 func GetActividadById(c *gin.Context) {
@@ -100,6 +89,9 @@ func GetActividadById(c *gin.Context) {
 	actividadDto, err := services.ActividadService.GetActividadById(id)
 
 	if err != nil {
+		log.Error("Error getting actividad by id: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error getting actividad"})
+		return
 	}
 
 	c.JSON(http.StatusOK, actividadDto)
