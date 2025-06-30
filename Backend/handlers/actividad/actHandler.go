@@ -61,8 +61,26 @@ func DeleteActividad(c *gin.Context) {
 	log.Debug("Delete actividad id: " + c.Param("id"))
 	id, _ := strconv.Atoi(c.Param("id"))
 
+	// Validar token
+	tokenString := c.GetHeader("Authorization")
+	if tokenString == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Falta el token"})
+		return
+	}
+	claims, err := utils.ParseToken(tokenString)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
+		return
+	}
+	// Validar rol admin
+	isAdmin, ok := claims["Rol"].(bool)
+	if !ok || !isAdmin {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Solo administradores pueden eliminar actividades"})
+		return
+	}
+
 	// Primero, borrar las inscripciones de esa actividad
-	err := services.InscripcionService.DeleteInscripcionesByActividadID(id)
+	err = services.InscripcionService.DeleteInscripcionesByActividadID(id)
 	if err != nil {
 		log.Error("Error deleting related inscripciones: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting related inscripciones"})
