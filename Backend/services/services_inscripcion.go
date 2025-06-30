@@ -14,6 +14,7 @@ type inscripcionServiceInterface interface {
 	GetInscripcionByUsuarioAndActividadID(usuarioID uint, actividadID uint) (dto.InscriptionDto, error)
 	DeleteInscripcion(usuarioID uint, actividadID uint) error
 	GetInscripcionesByUsuarioID(usuarioID uint) (dto.InscriptionsDto, error)
+	DeleteInscripcionesByActividadID(id int) error
 }
 
 var (
@@ -95,4 +96,9 @@ func (s *inscriptionService) GetInscripcionesByUsuarioID(usuarioID uint) (dto.In
 	}
 
 	return inscripcionesDto, nil
+}
+
+func (s *inscriptionService) DeleteInscripcionesByActividadID(id int) error {
+	inscripcionClient.DeleteInscripcionesByActividadID(id)
+	return nil
 }
