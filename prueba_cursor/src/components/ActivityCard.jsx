@@ -45,11 +45,13 @@ const ActivityCard = ({ activity, isAdmin }) => {
               className="icon-button delete-button"
               onClick={handleDelete}
               title="Eliminar actividad"
+              alt="Eliminar actividad"
             />
             <button
               className="icon-button info-button"
               onClick={handleInfoClick}
               title="Ver detalles"
+              alt="Ver detalles de la actividad"
             />
           </div>
         </>

@@ -48,6 +48,8 @@ const AllActivities = () => {
                 <button
                     className='new-activity-button'
                     onClick={() => navigate('/NewActivity')}
+                    alt="Crear nueva actividad"
+                    title="Crear nueva actividad"
                 >
                 </button>
             )}

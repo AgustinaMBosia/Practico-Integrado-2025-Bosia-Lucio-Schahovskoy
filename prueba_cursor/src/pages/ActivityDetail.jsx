@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const ActivityDetail = () => {
   const { id } = useParams();
-  const { user, token, isLoggedIn, logout } = useUser();
+  const { user, token, isLoggedIn,isAdmin, logout } = useUser();
   const navigate = useNavigate();
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -142,6 +142,35 @@ const ActivityDetail = () => {
         >
           {isEnrolled ? 'Desinscribirse' : 'Inscribirse'}
         </button>
+      )}
+
+      {isAdmin && (
+        <div className='admin-buttons-activity-detail'>
+          <button
+            className='delete-button-activity-detail'
+            onClick={() => {
+              if (window.confirm("¿Estás seguro de que quieres eliminar esta actividad?")) {
+                axios.delete(`http://localhost:8080/actividad/${id}`, {
+                  headers: { Authorization: `Bearer ${token}` },
+                })
+                .then(() => {
+                  alert("Actividad eliminada exitosamente");
+                  navigate('/AllActivities');
+                })
+                .catch(err => {
+                  console.error("Error al eliminar la actividad:", err);
+                  alert("Error al eliminar la actividad");
+                });
+              }
+            }}
+            title="Eliminar actividad"
+          />
+          <button
+            className='edit-button-activity-detail'
+            onClick={() => navigate(`/EditActivity/${id}`)}
+            title="Editar actividad"
+          />
+        </div>
       )}
     </div>
   );

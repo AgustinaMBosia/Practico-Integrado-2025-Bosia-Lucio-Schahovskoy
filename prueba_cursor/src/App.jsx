@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import { useUser } from './context/UserContext';
 import NewActivity from './pages/NewActivity';
 import AxiosInterceptor from './context/AxiosInterceptor';
+import EditActivity from './pages/EditActivity';
 
 function PrivateRoute({ children }) {
   const { isLoggedIn } = useUser();
@@ -51,6 +52,11 @@ function App() {
         <Route path="/NewActivity" element={
           <PrivateRoute>
             <NewActivity />
+          </PrivateRoute>
+        } />
+        <Route path="/EditActivity/:id" element={
+          <PrivateRoute>
+            <EditActivity />
           </PrivateRoute>
         } />
       </Routes>
