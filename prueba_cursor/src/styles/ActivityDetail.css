@@ -127,8 +127,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    width: 2rem;
-    height: 2rem;
+    width: 4rem;
+    height: 4rem;
     border: none;
     cursor: pointer;
     background-color: transparent;
@@ -152,8 +152,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    width: 2rem;
-    height: 2rem;
+    width: 4rem;
+    height: 4rem;
     border-radius: 100%;
     border: none;
     background-color: transparent;

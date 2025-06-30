@@ -19,9 +19,7 @@ const ActivityCard = ({ activity, isAdmin }) => {
 
   // Funcionalidad de usuarios
   const handleCardClick = () => {
-    if (!isAdmin) {
-      navigate(`/Activity/${activity.id}`);
-    }
+    navigate(`/Activity/${activity.id}`);
   };
 
   return (
@@ -37,27 +35,31 @@ const ActivityCard = ({ activity, isAdmin }) => {
         <p><strong>Profesor:</strong> {activity.nombre_instructor || 'Por asignar'}</p>
       </div>
 
-      {isAdmin && (
-        <>
-          <div className="admin-overlay"></div>
-          <div className="admin-controls">
-            <button
-              className="icon-button delete-button"
-              onClick={handleDelete}
-              title="Eliminar actividad"
-              alt="Eliminar actividad"
-            />
-            <button
-              className="icon-button info-button"
-              onClick={handleInfoClick}
-              title="Ver detalles"
-              alt="Ver detalles de la actividad"
-            />
-          </div>
-        </>
-      )}
     </div>
   );
 };
 
 export default ActivityCard;
+
+{/*
+// Código comentado que se puede usar para mostrar los botones de admin 
+{isAdmin && (
+<>
+<div className="admin-overlay"></div>
+<div className="admin-controls">
+<button
+className="icon-button delete-button"
+onClick={handleDelete}
+title="Eliminar actividad"
+alt="Eliminar actividad"
+/>
+<button
+className="icon-button info-button"
+onClick={handleInfoClick}
+title="Ver detalles"
+alt="Ver detalles de la actividad"
+/>
+</div>
+</>
+)}
+*/}

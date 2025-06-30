@@ -34,11 +34,12 @@ const NewActivity = () => {
         const fetchData = async () => {
             try {
                 const [catRes, instRes] = await Promise.all([
-                    axios.get('http://localhost:8080/categorias'),
-                    axios.get('http://localhost:8080/instructores')
+                    axios.get('http://localhost:8080/categoria'),
+                    axios.get('http://localhost:8080/instructor')
                 ]);
                 setCategorias(catRes.data);
                 setInstructores(instRes.data);
+                console.log(catRes.data, instRes.data);
             } catch (err) {
                 console.error("Error al cargar datos auxiliares:", err);
             }
@@ -93,7 +94,7 @@ const NewActivity = () => {
             return;
         }
 
-        const selectedCategoria = categorias.find(c => c.descripcion === form.categoria);
+        const selectedCategoria = categorias.find(c => c.Nombre === form.categoria);
         const selectedInstructor = instructores.find(i => i.nombre === form.instructor);
 
         if (!selectedCategoria || !selectedInstructor) {
@@ -168,7 +169,7 @@ const NewActivity = () => {
                         <select name='categoria' className="custom-select" value={form.categoria} onChange={handleChange} required>
                             <option value='' disabled>Seleccionar</option>
                             {categorias.map(c => (
-                                <option key={c.id} value={c.descripcion}>{c.descripcion}</option>
+                                <option key={c.id} value={c.Nombre}>{c.Nombre}</option>
                             ))}
                         </select>
                     </div>

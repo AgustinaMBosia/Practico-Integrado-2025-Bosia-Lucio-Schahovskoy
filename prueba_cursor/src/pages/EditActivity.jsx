@@ -62,8 +62,8 @@ const EditActivity = () => {
         const fetchData = async () => {
             try {
                 const [catRes, instRes] = await Promise.all([
-                    axios.get('http://localhost:8080/categorias'),
-                    axios.get('http://localhost:8080/instructores')
+                    axios.get('http://localhost:8080/categoria'),
+                    axios.get('http://localhost:8080/instructor')
                 ]);
                 setCategorias(catRes.data);
                 setInstructores(instRes.data);
@@ -135,7 +135,7 @@ const EditActivity = () => {
         }
 
         if (changedFields.categoria) {
-            const categoriaObj = categorias.find(c => c.descripcion === form.categoria);
+            const categoriaObj = categorias.find(c => c.Nombre === form.categoria);
             if (!categoriaObj) {
                 setError("Categoría inválida.");
                 setLoading(false);
@@ -214,7 +214,7 @@ const EditActivity = () => {
                         <select name='categoria' className="custom-select" value={form.categoria} onChange={handleChange} required>
                             <option value='' disabled>Seleccionar</option>
                             {categorias.map(c => (
-                                <option key={c.id} value={c.descripcion}>{c.descripcion}</option>
+                                <option key={c.id} value={c.Nombre}>{c.Nombre}</option>
                             ))}
                         </select>
                     </div>
