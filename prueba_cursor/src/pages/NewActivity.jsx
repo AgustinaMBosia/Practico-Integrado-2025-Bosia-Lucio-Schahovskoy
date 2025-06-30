@@ -1,4 +1,3 @@
-// Reemplaza el componente NewActivity actual con este
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/NewActivity.css';
@@ -10,7 +9,7 @@ const NewActivity = () => {
     const { isLoggedIn, isAdmin, token } = useUser();
     const navigate = useNavigate();
 
-    const diasValidos = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+    const diasValidos = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
     const initialForm = {
         titulo: '',
@@ -24,8 +23,6 @@ const NewActivity = () => {
     };
 
     const [form, setForm] = useState(initialForm);
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
     const [categorias, setCategorias] = useState([]);
     const [instructores, setInstructores] = useState([]);
@@ -39,9 +36,9 @@ const NewActivity = () => {
                 ]);
                 setCategorias(catRes.data);
                 setInstructores(instRes.data);
-                console.log(catRes.data, instRes.data);
             } catch (err) {
                 console.error("Error al cargar datos auxiliares:", err);
+                alert("Error al cargar categorías o instructores.");
             }
         };
         fetchData();
@@ -59,14 +56,12 @@ const NewActivity = () => {
     }
 
     const handleChange = (e) => {
-        setError('');
-        setSuccess('');
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
     const validateInputs = () => {
-        if (!diasValidos.includes(form.dia.toLowerCase())) {
-            return "Día inválido. Use por ejemplo: lunes, martes...";
+        if (!diasValidos.includes(form.dia)) {
+            return "Día inválido. Use por ejemplo: Lunes, Martes...";
         }
         if (!/^\d{2}:\d{2}$/.test(form.horario)) {
             return "Horario inválido. Use formato 24hs (ej: 14:30)";
@@ -83,13 +78,11 @@ const NewActivity = () => {
 
     const handleSubmit = async (e) => {
         if (e) e.preventDefault();
-        setError('');
-        setSuccess('');
         setLoading(true);
 
         const validationError = validateInputs();
         if (validationError) {
-            setError(validationError);
+            alert(validationError);
             setLoading(false);
             return;
         }
@@ -98,7 +91,7 @@ const NewActivity = () => {
         const selectedInstructor = instructores.find(i => i.nombre === form.instructor);
 
         if (!selectedCategoria || !selectedInstructor) {
-            setError("Seleccione una categoría e instructor válidos.");
+            alert("Seleccione una categoría e instructor válidos.");
             setLoading(false);
             return;
         }
@@ -118,14 +111,11 @@ const NewActivity = () => {
             await axios.post('http://localhost:8080/actividad', payload, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            setSuccess('Actividad creada exitosamente.');
-            setTimeout(() => {
-                setSuccess('');
-                navigate('/AllActivities');
-            }, 1500);
+            alert('Actividad creada exitosamente.');
+            navigate('/AllActivities');
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.error || 'Error al crear la actividad');
+            alert(err.response?.data?.error || 'Error al crear la actividad');
         } finally {
             setLoading(false);
         }
@@ -133,10 +123,8 @@ const NewActivity = () => {
 
     return (
         <div className='background-new-activity'>
-            <div className='form-new-activity-title'>NUEVA ACTIVIDAD</div>
+            <div className='form-new-activity-title'>Nueva actividad</div>
             <Icons showHome={true} showUser={true} showMenu={true} />
-            {error && <div className="error-message" onClick={() => setError('')}>{error}</div>}
-            {success && <div className="success-message" onClick={() => setSuccess('')}>{success}</div>}
 
             <div className='preview-container'>
                 {form.imagen ? (
@@ -148,21 +136,21 @@ const NewActivity = () => {
 
             <div className='form-container'>
                 <form id="New-Activity" onSubmit={handleSubmit}>
-                    
+
                     <div className='tupla-new-activity'><h2>Título</h2><input name='titulo' value={form.titulo} onChange={handleChange} required /></div>
-                    
+
                     <div className='tupla-new-activity'>
                         <h2>Día</h2>
                         <select name='dia' className="custom-select" value={form.dia} onChange={handleChange} required>
                             <option value='' disabled>Seleccionar</option>
                             {diasValidos.map(dia => (
-                                <option key={dia} value={dia}>{dia.charAt(0).toUpperCase() + dia.slice(1)}</option>
+                                <option key={dia} value={dia}>{dia}</option>
                             ))}
                         </select>
                     </div>
-                    
+
                     <div className='tupla-new-activity'><h2>Horario</h2><input name='horario' type='time' value={form.horario} onChange={handleChange} required /></div>
-                    
+
                     <div className='tupla-new-activity'><h2>Cupo</h2><input name='cupo' type='number' min='0' value={form.cupo} onChange={handleChange} required /></div>
 
                     <div className='tupla-new-activity'><h2>Categoría</h2>
