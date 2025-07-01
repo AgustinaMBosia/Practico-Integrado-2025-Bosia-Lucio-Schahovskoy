@@ -3,7 +3,8 @@ import ActivityCard from './ActivityCard';
 import '../styles/ActivityList.css';
 import { useUser } from '../context/UserContext';
 
-// Lista scrolleable de tarjetas de actividades
+// Lista scrolleable de tarjetas de actividades, reutilizable según el contexto
+// Muestra un título fijo y un mensaje si no hay actividades
 const ActivityList = ({ activities = [], title, emptyMessage }) => {
     const { isAdmin } = useUser();
     return (
@@ -13,9 +14,9 @@ const ActivityList = ({ activities = [], title, emptyMessage }) => {
                 {activities && activities.length > 0 ? (
                     <div className="activities-grid">
                         {activities.map(activity => (
-                            <ActivityCard 
-                                key={activity.id} 
-                                activity={activity} 
+                            <ActivityCard
+                                key={activity.id}
+                                activity={activity}
                                 isAdmin={isAdmin}
                             />
                         ))}

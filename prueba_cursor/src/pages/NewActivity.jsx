@@ -1,3 +1,4 @@
+// Importación de hooks y módulos necesarios
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/NewActivity.css';
@@ -6,11 +7,14 @@ import axios from 'axios';
 import { useUser } from '../context/UserContext';
 
 const NewActivity = () => {
+    // Trae información de sesión desde el contexto
     const { isLoggedIn, isAdmin, token } = useUser();
     const navigate = useNavigate();
 
+    // Lista fija de días válidos
     const diasValidos = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
+    // Estado inicial del formulario
     const initialForm = {
         titulo: '',
         dia: '',
@@ -22,11 +26,13 @@ const NewActivity = () => {
         descripcion: '',
     };
 
+    // Estados locales
     const [form, setForm] = useState(initialForm);
     const [loading, setLoading] = useState(false);
-    const [categorias, setCategorias] = useState([]);
-    const [instructores, setInstructores] = useState([]);
+    const [categorias, setCategorias] = useState([]);     // Lista de categorías para el select
+    const [instructores, setInstructores] = useState([]); // Lista de instructores para el select
 
+    // Al montar, se cargan categorías e instructores desde la API
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -44,6 +50,7 @@ const NewActivity = () => {
         fetchData();
     }, []);
 
+    // Si el usuario no es admin o no está logueado, se restringe el acceso
     if (!isLoggedIn || !isAdmin) {
         return (
             <div className='background-new-activity'>
@@ -55,10 +62,12 @@ const NewActivity = () => {
         );
     }
 
+    // Maneja cambios en los inputs del formulario
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
+    // Validación básica del formulario antes de enviarlo
     const validateInputs = () => {
         if (!diasValidos.includes(form.dia)) {
             return "Día inválido. Use por ejemplo: Lunes, Martes...";
@@ -76,6 +85,7 @@ const NewActivity = () => {
         return null;
     };
 
+    // Maneja el envío del formulario
     const handleSubmit = async (e) => {
         if (e) e.preventDefault();
         setLoading(true);
@@ -87,6 +97,7 @@ const NewActivity = () => {
             return;
         }
 
+        // Busca los IDs de categoría e instructor según el nombre seleccionado
         const selectedCategoria = categorias.find(c => c.Nombre === form.categoria);
         const selectedInstructor = instructores.find(i => i.nombre === form.instructor);
 
@@ -96,6 +107,7 @@ const NewActivity = () => {
             return;
         }
 
+        // Payload con todos los campos requeridos por la API
         const payload = {
             titulo: form.titulo,
             dia: form.dia,
@@ -107,6 +119,7 @@ const NewActivity = () => {
             instructor_id: selectedInstructor.id,
         };
 
+        // Envío del formulario al backend
         try {
             await axios.post('http://localhost:8080/actividad', payload, {
                 headers: { Authorization: `Bearer ${token}` },
@@ -121,11 +134,13 @@ const NewActivity = () => {
         }
     };
 
+    // Render principal del componente
     return (
         <div className='background-new-activity'>
             <div className='form-new-activity-title'>Nueva actividad</div>
             <Icons showHome={true} showUser={true} showMenu={true} />
 
+            {/* Vista previa de imagen */}
             <div className='preview-container'>
                 {form.imagen ? (
                     <img src={form.imagen} alt="Previsualización" className='preview-image' />
@@ -134,9 +149,9 @@ const NewActivity = () => {
                 )}
             </div>
 
+            {/* Formulario para ingresar los datos */}
             <div className='form-container'>
                 <form id="New-Activity" onSubmit={handleSubmit}>
-
                     <div className='tupla-new-activity'><h2>Título</h2><input name='titulo' value={form.titulo} onChange={handleChange} required /></div>
 
                     <div className='tupla-new-activity'>
@@ -177,6 +192,7 @@ const NewActivity = () => {
                 </form>
             </div>
 
+            {/* Botón de envío del formulario */}
             <button
                 form="New-Activity"
                 type='submit'

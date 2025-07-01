@@ -3,6 +3,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 
+/**
+ * Componente AxiosInterceptor para manejar errores 401 Unauthorized globalmente.
+ * Cierra la sesión del usuario y redirige a la página de inicio cuando ocurre un error 401.
+ */
+
 const AxiosInterceptor = () => {
   const { logout } = useUser();
   const navigate = useNavigate();
@@ -13,7 +18,7 @@ const AxiosInterceptor = () => {
       error => {
         if (error.response?.status === 401) {
           logout();
-          navigate('/login');
+          navigate('/');
         }
         return Promise.reject(error);
       }

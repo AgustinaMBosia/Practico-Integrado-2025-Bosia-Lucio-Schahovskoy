@@ -13,6 +13,7 @@ const Icons = ({
   showHome = true,
   showUser = true,
   showMenu = true
+  /* Ayuda a ocultar ciertos íconos según el contexto */
 }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [logoutMessage, setLogoutMessage] = useState('');
@@ -23,7 +24,6 @@ const Icons = ({
   const handleUserClick = () => setShowUserMenu(!showUserMenu);
   const handleMisActividades = () => navigate('/MyActivities');
   const handleLogout = () => {
-    //manejar el logout
     logout();
     setLogoutMessage('Sesión cerrada correctamente.');
     setTimeout(() => {
