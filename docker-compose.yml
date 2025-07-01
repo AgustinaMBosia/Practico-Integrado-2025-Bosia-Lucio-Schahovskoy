@@ -21,7 +21,7 @@ services:
 
   frontend:
     build: 
-      context: ./prueba_cursor
+      context: ./Frontend
       dockerfile: Dockerfile
     container_name: frontend-app
     ports:

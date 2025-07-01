@@ -4,7 +4,7 @@ import SearchIcon from '../styles/images/searchbaricon.svg';
 import '../styles/SearchBar.css';
 import '../styles/ActivityList.css';
 
-import ActivityList from '../components/ActivityList';
+import ActivityList from './ActivityList';
 
 // Barra de búsqueda onchange por diversos parámetros, normalizado
 const SearchBar = () => {

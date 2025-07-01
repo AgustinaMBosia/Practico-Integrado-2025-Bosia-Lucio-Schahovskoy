@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
+import { useUser } from './UserContext';
 
 /**
  * Componente AxiosInterceptor para manejar errores 401 Unauthorized globalmente.
