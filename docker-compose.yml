@@ -19,6 +19,16 @@ services:
     networks:
       - app-network
 
+  frontend:
+    build: 
+      context: ./prueba_cursor
+      dockerfile: Dockerfile
+    container_name: frontend-app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
   db:
     image: mysql:8.0
     container_name: mysql-db
