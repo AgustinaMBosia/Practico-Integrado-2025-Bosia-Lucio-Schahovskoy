@@ -141,8 +141,9 @@ const ActivityDetail = () => {
         <div className='tupla'><div className='nombre-atributo'>Horario:</div><div className='valor-atributo'>{activity.horario}</div></div>
         <div className='tupla'><div className='nombre-atributo'>Día:</div><div className='valor-atributo'>{activity.dia}</div></div>
         <div className='tupla'><div className='nombre-atributo'>Cupo:</div><div className='valor-atributo'>{activity.cupo}</div></div>
-        <div className='tupla'><div className='nombre-atributo'>Descripción:</div><div className='valor-atributo'>{activity.Categoria_description || 'Por asignar'}</div></div>
+        <div className='tupla'><div className='nombre-atributo'>Categoría:</div><div className='valor-atributo'>{activity.Categoria_description || 'Por asignar'}</div></div>
         <div className='tupla'><div className='nombre-atributo'>Profesor:</div><div className='valor-atributo'>{activity.nombre_instructor || 'Por asignar'}</div></div>
+        <div className='tupla'><div className='nombre-atributo'>Descripción:</div><div className='valor-atributo'>{activity.descripcion || 'No hay descripción disponible'}</div></div>
       </div>
 
       {/* Imagen de la actividad */}

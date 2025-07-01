@@ -49,15 +49,15 @@ func init() {
 			Logger: logger.Default.LogMode(logger.Info),
 		})
 		if err == nil {
-			log.Println("✅ Database connection established successfully")
+			log.Println("Database connection established successfully")
 			break
 		}
-		log.Printf("❌ Failed to connect to DB (attempt %d/%d): %v", i, maxRetries, err)
+		log.Printf("Failed to connect to DB (attempt %d/%d): %v", i, maxRetries, err)
 		time.Sleep(delaySeconds * time.Second)
 	}
 
 	if err != nil {
-		log.Fatal("❌ Could not connect to the database after several attempts.")
+		log.Fatal("Could not connect to the database after several attempts.")
 	}
 
 	usuarioClient.Db = Db
@@ -73,9 +73,9 @@ func StartDbEngine() {
 	Db.AutoMigrate(&models.Activity{})
 	Db.AutoMigrate(&models.Category{})
 	Db.AutoMigrate(&models.Instructor{})
-	log.Println("✅ Finished migrating database tables")
+	log.Println("Finished migrating database tables")
 
-	// 🧪 Poblar tabla users
+	// Poblar tabla users
 	var userCount int64
 	Db.Model(&models.User{}).Count(&userCount)
 	if userCount == 0 {
@@ -83,23 +83,26 @@ func StartDbEngine() {
 		Db.Create(&models.User{Username: "usuario", PasswordHash: "$2a$10$ziwjNjQdppZtS1WN7JUcqOXXxkiecIsSaTSIuzMsmiVOrx7kj7hOu", Email: "usuario@email.com", Rol: false})
 	}
 
-	// 🧪 Poblar tabla categories
+	// Poblar tabla categories
 	var catCount int64
 	Db.Model(&models.Category{}).Count(&catCount)
 	if catCount == 0 {
-		Db.Create(&models.Category{Nombre: "Yoga"})
-		Db.Create(&models.Category{Nombre: "Zumba"})
+		Db.Create(&models.Category{Nombre: "Cuerpo y mente"})
+		Db.Create(&models.Category{Nombre: "Fitness y cardio"})
+		Db.Create(&models.Category{Nombre: "Fortalecimiento y Postura"})
+
 	}
 
-	// 🧪 Poblar tabla instructors
+	// Poblar tabla instructors
 	var instCount int64
 	Db.Model(&models.Instructor{}).Count(&instCount)
 	if instCount == 0 {
 		Db.Create(&models.Instructor{Nombre: "Ana Torres", Email: "ana@email.com", Telefono: 3511234567})
 		Db.Create(&models.Instructor{Nombre: "Pedro Gómez", Email: "pedro@email.com", Telefono: 3517654321})
+		Db.Create(&models.Instructor{Nombre: "Lucía Fernández", Email: "lucia@email.com", Telefono: 3519876543})
 	}
 
-	// 🧪 Poblar tabla activities
+	// Poblar tabla activities
 	var actCount int64
 	Db.Model(&models.Activity{}).Count(&actCount)
 	if actCount == 0 {
@@ -107,7 +110,7 @@ func StartDbEngine() {
 			Titulo:       "Yoga Inicial",
 			Dia:          "Lunes",
 			Horario:      "10:00",
-			Imagen:       "yoga.jpg",
+			Imagen:       "https://sacredtribeyoga.com/wp-content/uploads/2021/01/Untitled-design-38.png",
 			Cupo:         15,
 			Descripcion:  "Clase de yoga básica",
 			CategoriaID:  1,
@@ -117,19 +120,51 @@ func StartDbEngine() {
 			Titulo:       "Zumba Power",
 			Dia:          "Miércoles",
 			Horario:      "18:00",
-			Imagen:       "zumba.jpg",
+			Imagen:       "http://www.shbarcelona.es/blog/es/wp-content/uploads/2015/05/adelgaza-bailando-zumba.jpg",
 			Cupo:         20,
 			Descripcion:  "Clase de zumba avanzada",
-			CategoriaID:  2,
+			CategoriaID:  3,
 			InstructorID: 2,
+		})
+		Db.Create(&models.Activity{
+			Titulo:       "Pilates Avanzado",
+			Dia:          "Miércoles",
+			Horario:      "18:30",
+			Imagen:       "https://cdn.bioguia.com/embed/40cdd919eb835826b551c61729d1981660888087/Pilates.jpeg",
+			Cupo:         12,
+			Descripcion:  "Sesión avanzada de pilates para mejorar fuerza y postura",
+			CategoriaID:  2,
+			InstructorID: 1,
+		})
+		Db.Create(&models.Activity{
+			Titulo:       "Funcional Intensivo",
+			Dia:          "Martes",
+			Horario:      "19:00",
+			Imagen:       "https://delfitsports.es/wp-content/uploads/2022/07/11-buenos-ejercicios-para-incluir-en-tu-entrenamiento-funcional-1000x600-1.jpg",
+			Cupo:         20,
+			Descripcion:  "Entrenamiento funcional de alta intensidad para quemar calorías",
+			CategoriaID:  2,
+			InstructorID: 3,
+		})
+		Db.Create(&models.Activity{
+			Titulo:       "Stretching y Relajación",
+			Dia:          "Jueves",
+			Horario:      "09:00",
+			Imagen:       "https://actitudsaludable.net/wp-content/uploads/2015/08/tecnicas-de-relajacion.jpg",
+			Cupo:         18,
+			Descripcion:  "Clase para mejorar la flexibilidad y reducir el estrés",
+			CategoriaID:  1,
+			InstructorID: 3,
 		})
 	}
 
-	// 🧪 Poblar tabla inscriptions
+	// Poblar tabla inscriptions
 	var inscCount int64
 	Db.Model(&models.Inscription{}).Count(&inscCount)
 	if inscCount == 0 {
 		Db.Create(&models.Inscription{Fecha: "2025-07-01", UserId: 1, ActivityID: 1})
 		Db.Create(&models.Inscription{Fecha: "2025-07-02", UserId: 2, ActivityID: 2})
+		Db.Create(&models.Inscription{Fecha: "2025-07-03", UserId: 1, ActivityID: 3})
+		Db.Create(&models.Inscription{Fecha: "2025-07-04", UserId: 2, ActivityID: 4})
 	}
 }
